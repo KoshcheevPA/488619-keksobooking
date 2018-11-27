@@ -103,8 +103,6 @@ var getNewPin = function (array) {
 };
 getNewPin(getOffers(OFFERS_NUMBER));
 
-
-var similarCardElement = document.querySelector('.map__card');
 var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
 var renderCard = function (offerNumber) {
@@ -119,7 +117,7 @@ var renderCard = function (offerNumber) {
   cardElement.querySelector('.popup__avatar').src = offerNumber.autor.avatar;
 
   var featuresList = cardElement.querySelector('.popup__features');
-  var featuresItem = cardElement.querySelector('li');
+  var featuresItem = featuresList.querySelector('li');
   for (var i = 0; i < offerNumber.offer.features.length; i++) {
     featuresItem.textContent = offerNumber.offer.features[i];
   }
@@ -127,19 +125,19 @@ var renderCard = function (offerNumber) {
   var housePhotos = cardElement.querySelector('.popup__photos');
   var housePhoto = cardElement.querySelector('.popup__photo');
   housePhoto.src = offerNumber.offer.photos[0];
-  for (var i = 1; i < offerNumber.offer.photos.length; i++) {
+  for (var j = 1; j < offerNumber.offer.photos.length; j++) {
     var photoElement = housePhoto.cloneNode(true);
-    photoElement.src = offerNumber.offer.photos[i];
+    photoElement.src = offerNumber.offer.photos[j];
     housePhotos.appendChild(photoElement);
   }
 
-  if (offerNumber.offer.type == 'flat') {
+  if (offerNumber.offer.type === 'flat') {
     cardElement.querySelector('.popup__type').textContent = 'Квартира';
-  } else if (offerNumber.offer.type == 'bungalo') {
+  } else if (offerNumber.offer.type === 'bungalo') {
     cardElement.querySelector('.popup__type').textContent = 'Бунгало';
-  } else if (offerNumber.offer.type == 'house') {
+  } else if (offerNumber.offer.type === 'house') {
     cardElement.querySelector('.popup__type').textContent = 'Дом';
-  } else if (offerNumber.offer.type == 'palace') {
+  } else if (offerNumber.offer.type === 'palace') {
     cardElement.querySelector('.popup__type').textContent = 'Дворец';
   }
   return cardElement;
