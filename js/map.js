@@ -24,6 +24,8 @@ var CHECK = ['12:00', '13:00', '14:00'];
 var FEATURES_ARRAY = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS_ARRAY = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var MAIN_PIN_HEIGHT = 88;
+var ESC_BUTTON = 27;
+var ENTER_BUTTON = 13;
 
 var mapBlock = document.querySelector('.map__pins');
 var mapBlockWidth = mapBlock.offsetWidth;
@@ -109,7 +111,6 @@ var similarPinElement = document.querySelector('.map__pin');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinFragment = document.createDocumentFragment();
 var mapPins = document.querySelector('.map__pins');
-
 var getNewPin = function (array) {
   for (var i = 0; i < array.length; i++) {
     var pinElement = pinTemplate.cloneNode(true);
@@ -121,10 +122,8 @@ var getNewPin = function (array) {
   }
   mapPins.appendChild(pinFragment);
 };
-// getNewPin(getOffers(OFFERS_NUMBER));
 
 var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-
 var renderCard = function (object) {
   var cardElement = similarCardTemplate.cloneNode(true);
   cardElement.classList.add('hidden');
@@ -176,11 +175,16 @@ var addCard = function () {
 var popupCard = document.querySelector('.popup');
 var popupClose = document.querySelector('.popup__close');
 
-var showPopup = function () {
+var showPopup = function (pin, card) {
   var mapCard = document.querySelectorAll('.map__card');
-  for (var i = 0; i < mapCard.length; i++) {
-    mapCard[i].classList.remove('hidden');
-  }
+  pin.addEventListener('click', function () {
+    for (var i = 0; i < mapCard.length; i++) {
+      if (!mapCard[i].classList.contains('hidden')) {
+        mapCard[i].classList.add('hidden');
+      }
+    }
+    card.classList.remove('hidden');
+  });
 };
 
 var closePopup = function () {
@@ -189,6 +193,16 @@ var closePopup = function () {
     mapCard[i].classList.add('hidden');
   }
 };
+
+var closePopupEsc = function (evt) {
+  var mapCard = document.querySelectorAll('.map__card');
+  for (var i = 0; i < mapCard.length; i++) {
+    if (evt.keyCode === ESC_BUTTON) {
+      mapCard[i].classList.add('hidden');
+    }
+  }
+};
+
 
 var turnOnForm = function () {
   map.classList.remove('map--faded');
@@ -200,16 +214,32 @@ var turnOnForm = function () {
   adressInput.value = getPinPosition(mainPin);
   getNewPin(getOffers(OFFERS_NUMBER));
   addCard();
+
   var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  var mapPinImg = document.querySelectorAll('.map__pin:not(.map__pin--main) img');
   var mapCard = document.querySelectorAll('.map__card');
   var popupCross = document.querySelectorAll('.popup__close');
+
   for (var k = 0; k < mapPin.length; k++) {
-    mapPin[k].addEventListener('click', showPopup);
+    if (mapCard[k].classList.contains('hidden')) {
+      showPopup(mapPin[k], mapCard[k]);
+    } else {
+      mapCard[k].classList.add('hidden');
+    }
   }
   for (var l = 0; l < mapPin.length; l++) {
     popupCross[l].addEventListener('click', closePopup);
+    document.addEventListener('keydown', closePopupEsc);
   }
   mainPin.removeEventListener('mouseup', turnOnForm);
 };
 
+var turnOnFormEnter = function (evt) {
+  if (evt.keyCode === ENTER_BUTTON) {
+    turnOnForm();
+    mainPin.removeEventListener('keydown', turnOnFormEnter);
+  }
+};
+
+mainPin.addEventListener('keydown', turnOnFormEnter);
 mainPin.addEventListener('mouseup', turnOnForm);
