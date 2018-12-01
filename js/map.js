@@ -169,11 +169,7 @@ var addCard = function () {
   }
   var mapFilters = document.querySelector('map__filters-container');
   map.insertBefore(cardFragment, mapFilters);
-  var mapCard = document.querySelector('.map__card');
 };
-
-var popupCard = document.querySelector('.popup');
-var popupClose = document.querySelector('.popup__close');
 
 var showPopup = function (pin, card) {
   var mapCard = document.querySelectorAll('.map__card');
@@ -216,15 +212,14 @@ var turnOnForm = function () {
   addCard();
 
   var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-  var mapPinImg = document.querySelectorAll('.map__pin:not(.map__pin--main) img');
   var mapCard = document.querySelectorAll('.map__card');
   var popupCross = document.querySelectorAll('.popup__close');
 
-  for (var k = 0; k < mapPin.length; k++) {
-    if (mapCard[k].classList.contains('hidden')) {
-      showPopup(mapPin[k], mapCard[k]);
+  for (var j = 0; j < mapPin.length; j++) {
+    if (mapCard[j].classList.contains('hidden')) {
+      showPopup(mapPin[j], mapCard[j]);
     } else {
-      mapCard[k].classList.add('hidden');
+      mapCard[j].classList.add('hidden');
     }
   }
   for (var l = 0; l < mapPin.length; l++) {
