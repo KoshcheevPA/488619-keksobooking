@@ -50,18 +50,6 @@ var getPinPosition = function (pin) {
   return positionPinX + ', ' + positionPinY;
 };
 
-mainPin.addEventListener('mouseup', function () {
-  map.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-  formHeader.removeAttribute('disabled');
-  for (var t = 0; t < formElement.length; t++) {
-    formElement[t].removeAttribute('disabled');
-  }
-  adressInput.value = getPinPosition(mainPin);
-});
-
-
-
 var getRandom = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
@@ -139,7 +127,7 @@ var similarCardTemplate = document.querySelector('#card').content.querySelector(
 
 var renderCard = function (object) {
   var cardElement = similarCardTemplate.cloneNode(true);
-
+  cardElement.classList.add('hidden');
   cardElement.querySelector('.popup__title').textContent = object.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = object.offer.adress;
   cardElement.querySelector('.popup__text--price').textContent = object.offer.price + ' ₽/ночь';
@@ -175,10 +163,29 @@ var renderCard = function (object) {
   return cardElement;
 };
 
-var cardFragment = document.createDocumentFragment();
-for (var i = 0; i < offersArray.length; i++) {
-  cardFragment.appendChild(renderCard(offersArray[i]));
-}
+var popupCard = document.querySelector('.popup');
+var popupClose = document.querySelector('.popup__close');
 
-var mapFilters = document.querySelector('map__filters-container');
-map.insertBefore(cardFragment, mapFilters);
+mainPin.addEventListener('mouseup', function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  formHeader.removeAttribute('disabled');
+  for (var t = 0; t < formElement.length; t++) {
+    formElement[t].removeAttribute('disabled');
+  }
+  adressInput.value = getPinPosition(mainPin);
+  getNewPin(getOffers(OFFERS_NUMBER));
+
+  var cardFragment = document.createDocumentFragment();
+  for (var i = 0; i < offersArray.length; i++) {
+    cardFragment.appendChild(renderCard(offersArray[i]));
+  }
+  var mapFilters = document.querySelector('map__filters-container');
+  map.insertBefore(cardFragment, mapFilters);
+  var popup = document.querySelector('.popup');
+  var popupClose = document.querySelector('.popup__close');
+  var mapPin = mapPins.querySelector('.map__pin');
+  popupClose.addEventListener('click', function() {
+    popup.classList.add('hidden');
+  });
+});
