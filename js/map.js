@@ -163,10 +163,34 @@ var renderCard = function (object) {
   return cardElement;
 };
 
+var addCard = function () {
+  var cardFragment = document.createDocumentFragment();
+  for (var i = 0; i < offersArray.length; i++) {
+    cardFragment.appendChild(renderCard(offersArray[i]));
+  }
+  var mapFilters = document.querySelector('map__filters-container');
+  map.insertBefore(cardFragment, mapFilters);
+  var mapCard = document.querySelector('.map__card');
+};
+
 var popupCard = document.querySelector('.popup');
 var popupClose = document.querySelector('.popup__close');
 
-mainPin.addEventListener('mouseup', function () {
+var showPopup = function () {
+  var mapCard = document.querySelectorAll('.map__card');
+  for (var i = 0; i < mapCard.length; i++) {
+    mapCard[i].classList.remove('hidden');
+  }
+};
+
+var closePopup = function () {
+  var mapCard = document.querySelectorAll('.map__card');
+  for (var i = 0; i < mapCard.length; i++) {
+    mapCard[i].classList.add('hidden');
+  }
+};
+
+var turnOnForm = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
   formHeader.removeAttribute('disabled');
@@ -175,17 +199,17 @@ mainPin.addEventListener('mouseup', function () {
   }
   adressInput.value = getPinPosition(mainPin);
   getNewPin(getOffers(OFFERS_NUMBER));
-
-  var cardFragment = document.createDocumentFragment();
-  for (var i = 0; i < offersArray.length; i++) {
-    cardFragment.appendChild(renderCard(offersArray[i]));
+  addCard();
+  var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  var mapCard = document.querySelectorAll('.map__card');
+  var popupCross = document.querySelectorAll('.popup__close');
+  for (var k = 0; k < mapPin.length; k++) {
+    mapPin[k].addEventListener('click', showPopup);
   }
-  var mapFilters = document.querySelector('map__filters-container');
-  map.insertBefore(cardFragment, mapFilters);
-  var popup = document.querySelector('.popup');
-  var popupClose = document.querySelector('.popup__close');
-  var mapPin = mapPins.querySelector('.map__pin');
-  popupClose.addEventListener('click', function() {
-    popup.classList.add('hidden');
-  });
-});
+  for (var l = 0; l < mapPin.length; l++) {
+    popupCross[l].addEventListener('click', closePopup);
+  }
+  mainPin.removeEventListener('mouseup', turnOnForm);
+};
+
+mainPin.addEventListener('mouseup', turnOnForm);
