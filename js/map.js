@@ -23,12 +23,37 @@ var OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var CHECK = ['12:00', '13:00', '14:00'];
 var FEATURES_ARRAY = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS_ARRAY = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+var MAIN_PIN_HEIGHT = 88;
+var ESC_BUTTON = 27;
+var ENTER_BUTTON = 13;
 
 var mapBlock = document.querySelector('.map__pins');
 var mapBlockWidth = mapBlock.offsetWidth;
+var mapBlockHeight = mapBlock.offsetHeight;
 
 var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+var adForm = document.querySelector('.ad-form');
+var formHeader = adForm.querySelector('.ad-form-header');
+var formElement = adForm.querySelectorAll('.ad-form__element');
+var adressInput = document.querySelector('#address');
+
+var pageTurnOff = function () {
+  formHeader.setAttribute('disabled', 'true');
+  for (var k = 0; k < formElement.length; k++) {
+    formElement[k].setAttribute('disabled', 'true');
+  }
+};
+
+pageTurnOff();
+
+var mainPin = document.querySelector('.map__pin--main');
+adressInput.value = mapBlockWidth / 2 + ', ' + mapBlockHeight / 2;
+
+var getPinPosition = function (pin) {
+  var positionPinY = Math.round(pin.offsetTop + MAIN_PIN_HEIGHT);
+  var positionPinX = Math.round(pin.offsetLeft + pin.offsetWidth / 2);
+  return positionPinX + ', ' + positionPinY;
+};
 
 var getRandom = function (array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -89,7 +114,6 @@ var similarPinElement = document.querySelector('.map__pin');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var pinFragment = document.createDocumentFragment();
 var mapPins = document.querySelector('.map__pins');
-
 var getNewPin = function (array) {
   for (var i = 0; i < array.length; i++) {
     var pinElement = pinTemplate.cloneNode(true);
@@ -101,52 +125,119 @@ var getNewPin = function (array) {
   }
   mapPins.appendChild(pinFragment);
 };
-getNewPin(getOffers(OFFERS_NUMBER));
 
 var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-
-var renderCard = function (offerNumber) {
+var renderCard = function (object) {
   var cardElement = similarCardTemplate.cloneNode(true);
-
-  cardElement.querySelector('.popup__title').textContent = offerNumber.offer.title;
-  cardElement.querySelector('.popup__text--address').textContent = offerNumber.offer.adress;
-  cardElement.querySelector('.popup__text--price').textContent = offerNumber.offer.price + ' ₽/ночь';
-  cardElement.querySelector('.popup__text--capacity').textContent = offerNumber.offer.rooms + ' комнаты для ' + offerNumber.offer.guest + ' гостей';
-  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offerNumber.offer.checkin + ', выезд до ' + offerNumber.offer.checkout;
-  cardElement.querySelector('.popup__description').textContent = offerNumber.offer.description;
-  cardElement.querySelector('.popup__avatar').src = offerNumber.autor.avatar;
+  cardElement.classList.add('hidden');
+  cardElement.querySelector('.popup__title').textContent = object.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = object.offer.adress;
+  cardElement.querySelector('.popup__text--price').textContent = object.offer.price + ' ₽/ночь';
+  cardElement.querySelector('.popup__text--capacity').textContent = object.offer.rooms + ' комнаты для ' + object.offer.guest + ' гостей';
+  cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
+  cardElement.querySelector('.popup__description').textContent = object.offer.description;
+  cardElement.querySelector('.popup__avatar').src = object.autor.avatar;
 
   var featuresList = cardElement.querySelector('.popup__features');
   var featuresItem = featuresList.querySelector('li');
-  for (var i = 0; i < offerNumber.offer.features.length; i++) {
-    featuresItem.textContent = offerNumber.offer.features[i];
+  for (var i = 0; i < object.offer.features.length; i++) {
+    featuresItem.textContent = object.offer.features[i];
   }
 
   var housePhotos = cardElement.querySelector('.popup__photos');
   var housePhoto = cardElement.querySelector('.popup__photo');
-  housePhoto.src = offerNumber.offer.photos[0];
-  for (var j = 1; j < offerNumber.offer.photos.length; j++) {
+  housePhoto.src = object.offer.photos[0];
+  for (var j = 1; j < object.offer.photos.length; j++) {
     var photoElement = housePhoto.cloneNode(true);
-    photoElement.src = offerNumber.offer.photos[j];
+    photoElement.src = object.offer.photos[j];
     housePhotos.appendChild(photoElement);
   }
 
-  if (offerNumber.offer.type === 'flat') {
+  if (object.offer.type === 'flat') {
     cardElement.querySelector('.popup__type').textContent = 'Квартира';
-  } else if (offerNumber.offer.type === 'bungalo') {
+  } else if (object.offer.type === 'bungalo') {
     cardElement.querySelector('.popup__type').textContent = 'Бунгало';
-  } else if (offerNumber.offer.type === 'house') {
+  } else if (object.offer.type === 'house') {
     cardElement.querySelector('.popup__type').textContent = 'Дом';
-  } else if (offerNumber.offer.type === 'palace') {
+  } else if (object.offer.type === 'palace') {
     cardElement.querySelector('.popup__type').textContent = 'Дворец';
   }
   return cardElement;
 };
 
-var cardFragment = document.createDocumentFragment();
-for (var i = 0; i < offersArray.length; i++) {
-  cardFragment.appendChild(renderCard(offersArray[i]));
-}
+var addCard = function () {
+  var cardFragment = document.createDocumentFragment();
+  for (var i = 0; i < offersArray.length; i++) {
+    cardFragment.appendChild(renderCard(offersArray[i]));
+  }
+  var mapFilters = document.querySelector('map__filters-container');
+  map.insertBefore(cardFragment, mapFilters);
+};
 
-var mapFilters = document.querySelector('map__filters-container');
-map.insertBefore(cardFragment, mapFilters);
+var onPopupShow = function (pin, card) {
+  var mapCard = document.querySelectorAll('.map__card');
+  pin.addEventListener('click', function () {
+    for (var i = 0; i < mapCard.length; i++) {
+      if (!mapCard[i].classList.contains('hidden')) {
+        mapCard[i].classList.add('hidden');
+      }
+    }
+    card.classList.remove('hidden');
+  });
+};
+
+var onPopupClose = function () {
+  var mapCard = document.querySelectorAll('.map__card');
+  for (var i = 0; i < mapCard.length; i++) {
+    mapCard[i].classList.add('hidden');
+  }
+};
+
+var onPopupCloseEsc = function (evt) {
+  var mapCard = document.querySelectorAll('.map__card');
+  for (var i = 0; i < mapCard.length; i++) {
+    if (evt.keyCode === ESC_BUTTON) {
+      mapCard[i].classList.add('hidden');
+    }
+  }
+};
+
+
+var onFormActivate = function () {
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+  formHeader.removeAttribute('disabled');
+  for (var t = 0; t < formElement.length; t++) {
+    formElement[t].removeAttribute('disabled');
+  }
+  adressInput.value = getPinPosition(mainPin);
+  getNewPin(getOffers(OFFERS_NUMBER));
+  addCard();
+
+  var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+  var mapCard = document.querySelectorAll('.map__card');
+  var popupCross = document.querySelectorAll('.popup__close');
+
+  for (var j = 0; j < mapPin.length; j++) {
+    if (mapCard[j].classList.contains('hidden')) {
+      onPopupShow(mapPin[j], mapCard[j]);
+    } else {
+      mapCard[j].classList.add('hidden');
+    }
+  }
+  for (var l = 0; l < mapPin.length; l++) {
+    popupCross[l].addEventListener('click', onPopupClose);
+    document.addEventListener('keydown', onPopupCloseEsc);
+  }
+  mainPin.removeEventListener('mouseup', onFormActivate);
+};
+
+var onMainPinActivateEnter = function (evt) {
+  if (evt.keyCode === ENTER_BUTTON) {
+    onFormActivate();
+    mainPin.removeEventListener('keydown', onMainPinActivateEnter);
+  }
+};
+
+mainPin.addEventListener('keydown', onMainPinActivateEnter);
+mainPin.addEventListener('mouseup', onFormActivate);
