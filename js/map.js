@@ -179,7 +179,6 @@ var addCard = function () {
 };
 
 
-
 var onFormActivate = function () {
   map.classList.remove('map--faded');
   adForm.classList.remove('ad-form--disabled');
@@ -257,7 +256,7 @@ var noGuests = guestRoomSelect.querySelector('[value="0"]');
 
 
 priceInput.placeholder = MIN_FLAT_PRICE;
-typeSelect.addEventListener('change', function() {
+typeSelect.addEventListener('change', function () {
   if (typeSelect.value === 'bungalo') {
     priceInput.min = MIN_BUNGALO_PRICE;
   } else if (typeSelect.value === 'flat') {
@@ -270,11 +269,11 @@ typeSelect.addEventListener('change', function() {
   priceInput.placeholder = priceInput.min;
 });
 
-timeInSelect.addEventListener('change', function() {
+timeInSelect.addEventListener('change', function () {
   timeOutSelect.selectedIndex = timeInSelect.selectedIndex;
 });
 
-timeOutSelect.addEventListener('change', function() {
+timeOutSelect.addEventListener('change', function () {
   timeInSelect.selectedIndex = timeOutSelect.selectedIndex;
 });
 
