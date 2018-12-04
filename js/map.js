@@ -194,7 +194,7 @@ var onFormActivate = function () {
   var mapCard = document.querySelectorAll('.map__card');
   var popupCross = document.querySelectorAll('.popup__close');
 
-  var onPopupShow = function (pin, card) {
+  var onPinClick = function (pin, card) {
     pin.addEventListener('click', function () {
       for (var i = 0; i < mapCard.length; i++) {
         if (!mapCard[i].classList.contains('hidden')) {
@@ -222,7 +222,7 @@ var onFormActivate = function () {
 
   for (var j = 0; j < mapPin.length; j++) {
     if (mapCard[j].classList.contains('hidden')) {
-      onPopupShow(mapPin[j], mapCard[j]);
+      onPinClick(mapPin[j], mapCard[j]);
     } else {
       mapCard[j].classList.add('hidden');
     }
@@ -249,6 +249,7 @@ var timeInSelect = adForm.querySelector('#timein');
 var timeOutSelect = adForm.querySelector('#timeout');
 var roomNumberSelect = adForm.querySelector('#room_number');
 var guestRoomSelect = adForm.querySelector('#capacity');
+
 var oneGuest = guestRoomSelect.querySelector('[value="1"]');
 var twoGuests = guestRoomSelect.querySelector('[value="2"]');
 var threeGuests = guestRoomSelect.querySelector('[value="3"]');
@@ -285,27 +286,35 @@ var removeDisabled = function (element) {
   element.removeAttribute('disabled');
 };
 
+
+var guestsNumbersObject = {
+  oneRoom: oneGuest,
+  twoRooms: [oneGuest, twoGuests],
+  threeRooms: [oneGuest, twoGuests, threeGuests],
+  noRooms: noGuests
+};
+
 roomNumberSelect.addEventListener('change', function () {
-  removeDisabled(twoGuests);
-  removeDisabled(oneGuest);
-  removeDisabled(noGuests);
+  setDisabled(twoGuests);
+  setDisabled(oneGuest);
+  setDisabled(threeGuests);
   setDisabled(noGuests);
   if (roomNumberSelect.value === '1') {
     guestRoomSelect.value = '1';
-    setDisabled(twoGuests);
-    setDisabled(threeGuests);
+    removeDisabled(guestsNumbersObject.oneRoom);
   } else if (roomNumberSelect.value === '2') {
     guestRoomSelect.value = '2';
-    setDisabled(threeGuests);
+    for (var i = 0; i < guestsNumbersObject.twoRooms.length; i++) {
+      removeDisabled(guestsNumbersObject.twoRooms[i]);
+    }
   } else if (roomNumberSelect.value === '3') {
     guestRoomSelect.value = '3';
-    removeDisabled(threeGuests);
+    for (var j = 0; j < guestsNumbersObject.threeRooms.length; j++) {
+      removeDisabled(guestsNumbersObject.threeRooms[j]);
+    }
   } else if (roomNumberSelect.value === '100') {
     guestRoomSelect.value = '0';
-    removeDisabled(noGuests);
-    setDisabled(twoGuests);
-    setDisabled(threeGuests);
-    setDisabled(oneGuest);
+    removeDisabled(guestsNumbersObject.noRooms);
   }
 });
 
