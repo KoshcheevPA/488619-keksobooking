@@ -250,10 +250,7 @@ var timeOutSelect = adForm.querySelector('#timeout');
 var roomNumberSelect = adForm.querySelector('#room_number');
 var guestRoomSelect = adForm.querySelector('#capacity');
 
-var oneGuest = guestRoomSelect.querySelector('[value="1"]');
-var twoGuests = guestRoomSelect.querySelector('[value="2"]');
-var threeGuests = guestRoomSelect.querySelector('[value="3"]');
-var noGuests = guestRoomSelect.querySelector('[value="0"]');
+var guestsAllOptions = guestRoomSelect.querySelectorAll('option');
 
 
 priceInput.placeholder = MIN_FLAT_PRICE;
@@ -288,33 +285,35 @@ var removeDisabled = function (element) {
 
 
 var guestsNumbersObject = {
-  oneRoom: oneGuest,
-  twoRooms: [oneGuest, twoGuests],
-  threeRooms: [oneGuest, twoGuests, threeGuests],
-  noRooms: noGuests
+  oneRoom: [1],
+  twoRooms: [1, 2],
+  threeRooms: [1, 2, 3],
+  noRooms: [0]
+};
+
+var getGuestOptions = function (array) {
+  for (var j = 0; j < guestsAllOptions.length; j++) {
+    setDisabled(guestsAllOptions[j]);
+  }
+  for (var i = 0; i < array.length; i++) {
+    var guestOptions = guestRoomSelect.querySelector('[value="' + array[i] + '"]');
+    removeDisabled(guestOptions);
+  }
 };
 
 roomNumberSelect.addEventListener('change', function () {
-  setDisabled(twoGuests);
-  setDisabled(oneGuest);
-  setDisabled(threeGuests);
-  setDisabled(noGuests);
   if (roomNumberSelect.value === '1') {
     guestRoomSelect.value = '1';
-    removeDisabled(guestsNumbersObject.oneRoom);
+    getGuestOptions(guestsNumbersObject.oneRoom);
   } else if (roomNumberSelect.value === '2') {
     guestRoomSelect.value = '2';
-    for (var i = 0; i < guestsNumbersObject.twoRooms.length; i++) {
-      removeDisabled(guestsNumbersObject.twoRooms[i]);
-    }
+    getGuestOptions(guestsNumbersObject.twoRooms);
   } else if (roomNumberSelect.value === '3') {
     guestRoomSelect.value = '3';
-    for (var j = 0; j < guestsNumbersObject.threeRooms.length; j++) {
-      removeDisabled(guestsNumbersObject.threeRooms[j]);
-    }
+    getGuestOptions(guestsNumbersObject.threeRooms);
   } else if (roomNumberSelect.value === '100') {
     guestRoomSelect.value = '0';
-    removeDisabled(guestsNumbersObject.noRooms);
+    getGuestOptions(guestsNumbersObject.noRooms);
   }
 });
 
