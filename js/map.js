@@ -302,7 +302,7 @@ var getGuestOptions = function (array) {
 };
 
 roomNumberSelect.addEventListener('change', function () {
-  if (roomNumberSelect.value = '100') {
+  if (roomNumberSelect.value === '100') {
     guestRoomSelect.value = '0';
   } else {
     guestRoomSelect.value = roomNumberSelect.value;
