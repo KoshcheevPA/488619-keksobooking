@@ -285,10 +285,10 @@ var removeDisabled = function (element) {
 
 
 var guestsNumbersObject = {
-  oneRoom: [1],
-  twoRooms: [1, 2],
-  threeRooms: [1, 2, 3],
-  noRooms: [0]
+  100: [0],
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3]
 };
 
 var getGuestOptions = function (array) {
@@ -302,19 +302,8 @@ var getGuestOptions = function (array) {
 };
 
 roomNumberSelect.addEventListener('change', function () {
-  if (roomNumberSelect.value === '1') {
-    guestRoomSelect.value = '1';
-    getGuestOptions(guestsNumbersObject.oneRoom);
-  } else if (roomNumberSelect.value === '2') {
-    guestRoomSelect.value = '2';
-    getGuestOptions(guestsNumbersObject.twoRooms);
-  } else if (roomNumberSelect.value === '3') {
-    guestRoomSelect.value = '3';
-    getGuestOptions(guestsNumbersObject.threeRooms);
-  } else if (roomNumberSelect.value === '100') {
-    guestRoomSelect.value = '0';
-    getGuestOptions(guestsNumbersObject.noRooms);
-  }
+  guestRoomSelect.value = roomNumberSelect.value;
+  getGuestOptions(guestsNumbersObject[roomNumberSelect.value]);
 });
 
 
