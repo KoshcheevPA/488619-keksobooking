@@ -285,10 +285,10 @@ var removeDisabled = function (element) {
 
 
 var guestsNumbersObject = {
-  100: [0],
   1: [1],
   2: [1, 2],
-  3: [1, 2, 3]
+  3: [1, 2, 3],
+  100: [0]
 };
 
 var getGuestOptions = function (array) {
@@ -302,7 +302,11 @@ var getGuestOptions = function (array) {
 };
 
 roomNumberSelect.addEventListener('change', function () {
-  guestRoomSelect.value = roomNumberSelect.value;
+  if (roomNumberSelect.value = '100') {
+    guestRoomSelect.value = '0';           //без этого условия данные не отправляются
+  } else {
+    guestRoomSelect.value = roomNumberSelect.value;
+  }
   getGuestOptions(guestsNumbersObject[roomNumberSelect.value]);
 });
 
