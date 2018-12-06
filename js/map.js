@@ -8,7 +8,7 @@ var MAX_ROOMS = 5;
 var MIN_GUESTS_NUMBER = 1;
 var MAX_GUESTS_NUMBER = 10;
 var MIN_LOCATION_Y = 130;
-var MAX_LOCATION_X = 630;
+var MAX_LOCATION_Y = 630;
 var OFFER_TITLES = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
@@ -23,7 +23,7 @@ var OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var CHECK = ['12:00', '13:00', '14:00'];
 var FEATURES_ARRAY = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS_ARRAY = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
-var MAIN_PIN_HEIGHT = 88;
+var MAIN_PIN_HEIGHT = 66;
 var ESC_BUTTON = 27;
 var ENTER_BUTTON = 13;
 var MIN_BUNGALO_PRICE = 0;
@@ -54,7 +54,7 @@ var mainPin = document.querySelector('.map__pin--main');
 adressInput.value = mapBlockWidth / 2 + ', ' + mapBlockHeight / 2;
 
 var getPinPosition = function (pin) {
-  var positionPinY = Math.round(pin.offsetTop + MAIN_PIN_HEIGHT);
+  var positionPinY = Math.round(pin.offsetTop + MAIN_PIN_HEIGHT / 2);
   var positionPinX = Math.round(pin.offsetLeft + pin.offsetWidth / 2);
   return positionPinX + ', ' + positionPinY;
 };
@@ -85,7 +85,7 @@ var offersArray = [];
 var getOffers = function (offersNumber) {
   for (var i = 1; i < offersNumber + 1; i++) {
     var avatarSrc = 'img/avatars/user0' + i + '.png';
-    var locationY = getRandomMinMax(MIN_LOCATION_Y, MAX_LOCATION_X);
+    var locationY = getRandomMinMax(MIN_LOCATION_Y, MAX_LOCATION_Y);
     var locationX = getRandomMinMax(getLocationX(mapBlockWidth, similarPinElement.offsetWidth)[0], getLocationX(mapBlockWidth, similarPinElement.offsetWidth)[1]);
     var offer = {
       autor: {
@@ -308,6 +308,51 @@ roomNumberSelect.addEventListener('change', function () {
     guestRoomSelect.value = roomNumberSelect.value;
   }
   getGuestOptions(guestsNumbersObject[roomNumberSelect.value]);
+});
+
+mainPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var onMouseMove = function (evtMove) {
+    evtMove.preventDefault();
+
+    var shift = {
+      x: startCoords.x - evtMove.clientX,
+      y: startCoords.y - evtMove.clientY
+    };
+
+    startCoords = {
+      x: evtMove.clientX,
+      y: evtMove.clientY,
+    };
+
+    var topCoord = mainPin.offsetTop - shift.y;
+    var leftCoord = mainPin.offsetLeft - shift.x;
+
+    if (topCoord <= (MIN_LOCATION_Y - mainPin.offsetHeight / 2)) {
+      topCoord = MIN_LOCATION_Y - mainPin.offsetHeight / 2;
+    } else if (topCoord >= (MAX_LOCATION_Y - mainPin.offsetHeight / 2)) {
+      topCoord = MAX_LOCATION_Y - mainPin.offsetHeight / 2;
+    }
+
+    mainPin.style.top = topCoord + 'px';
+    mainPin.style.left = leftCoord + 'px';
+  };
+
+  var onMouseUp = function (evtUp) {
+    evtUp.preventDefault();
+
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
 
 
