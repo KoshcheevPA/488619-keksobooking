@@ -9,6 +9,7 @@ var MIN_GUESTS_NUMBER = 1;
 var MAX_GUESTS_NUMBER = 10;
 var MIN_LOCATION_Y = 130;
 var MAX_LOCATION_Y = 630;
+var MIN_LOCATION_X = 0;
 var OFFER_TITLES = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
@@ -340,12 +341,21 @@ mainPin.addEventListener('mousedown', function (evt) {
       topCoord = MAX_LOCATION_Y - mainPin.offsetHeight / 2;
     }
 
+    if (leftCoord <= (MIN_LOCATION_X - mainPin.offsetWidth / 2)) {
+      leftCoord = MIN_LOCATION_X - mainPin.offsetWidth / 2;
+    } else if (leftCoord >= (map.offsetWidth - mainPin.offsetWidth / 2)) {
+      leftCoord = map.offsetWidth - mainPin.offsetWidth / 2;
+    }
+
     mainPin.style.top = topCoord + 'px';
     mainPin.style.left = leftCoord + 'px';
+
+    adressInput.value = getPinPosition(mainPin);
   };
 
   var onMouseUp = function (evtUp) {
     evtUp.preventDefault();
+    adressInput.value = getPinPosition(mainPin);
 
     document.removeEventListener('mousemove', onMouseMove);
     document.removeEventListener('mouseup', onMouseUp);
