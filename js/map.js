@@ -26,6 +26,10 @@ var PHOTOS_ARRAY = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http:
 var MAIN_PIN_HEIGHT = 88;
 var ESC_BUTTON = 27;
 var ENTER_BUTTON = 13;
+var MIN_BUNGALO_PRICE = 0;
+var MIN_FLAT_PRICE = 1000;
+var MIN_HOUSE_PRICE = 5000;
+var MIN_PALACE_PRICE = 10000;
 
 var mapBlock = document.querySelector('.map__pins');
 var mapBlockWidth = mapBlock.offsetWidth;
@@ -98,7 +102,7 @@ var getOffers = function (offersNumber) {
         checkout: getRandom(CHECK),
         features: getRandomArrayItems(FEATURES_ARRAY, getRandomMinMax(0, FEATURES_ARRAY.length + 1)),
         description: '',
-        photos: getRandomArrayItems(PHOTOS_ARRAY, getRandomMinMax(0, PHOTOS_ARRAY.length + 1)),
+        photos: getRandomArrayItems(PHOTOS_ARRAY, getRandomMinMax(1, PHOTOS_ARRAY.length + 1)),
       },
       location: {
         x: locationX,
@@ -174,34 +178,6 @@ var addCard = function () {
   map.insertBefore(cardFragment, mapFilters);
 };
 
-var onPopupShow = function (pin, card) {
-  var mapCard = document.querySelectorAll('.map__card');
-  pin.addEventListener('click', function () {
-    for (var i = 0; i < mapCard.length; i++) {
-      if (!mapCard[i].classList.contains('hidden')) {
-        mapCard[i].classList.add('hidden');
-      }
-    }
-    card.classList.remove('hidden');
-  });
-};
-
-var onPopupClose = function () {
-  var mapCard = document.querySelectorAll('.map__card');
-  for (var i = 0; i < mapCard.length; i++) {
-    mapCard[i].classList.add('hidden');
-  }
-};
-
-var onPopupCloseEsc = function (evt) {
-  var mapCard = document.querySelectorAll('.map__card');
-  for (var i = 0; i < mapCard.length; i++) {
-    if (evt.keyCode === ESC_BUTTON) {
-      mapCard[i].classList.add('hidden');
-    }
-  }
-};
-
 
 var onFormActivate = function () {
   map.classList.remove('map--faded');
@@ -218,9 +194,35 @@ var onFormActivate = function () {
   var mapCard = document.querySelectorAll('.map__card');
   var popupCross = document.querySelectorAll('.popup__close');
 
+  var onPinClick = function (pin, card) {
+    pin.addEventListener('click', function () {
+      for (var i = 0; i < mapCard.length; i++) {
+        if (!mapCard[i].classList.contains('hidden')) {
+          mapCard[i].classList.add('hidden');
+        }
+      }
+      card.classList.remove('hidden');
+    });
+  };
+
+  var onPopupClose = function () {
+    for (var i = 0; i < mapCard.length; i++) {
+      mapCard[i].classList.add('hidden');
+    }
+  };
+
+  var onPopupCloseEsc = function (evt) {
+    for (var i = 0; i < mapCard.length; i++) {
+      if (evt.keyCode === ESC_BUTTON) {
+        mapCard[i].classList.add('hidden');
+      }
+    }
+  };
+
+
   for (var j = 0; j < mapPin.length; j++) {
     if (mapCard[j].classList.contains('hidden')) {
-      onPopupShow(mapPin[j], mapCard[j]);
+      onPinClick(mapPin[j], mapCard[j]);
     } else {
       mapCard[j].classList.add('hidden');
     }
@@ -238,6 +240,76 @@ var onMainPinActivateEnter = function (evt) {
     mainPin.removeEventListener('keydown', onMainPinActivateEnter);
   }
 };
+
+// Условия заполнения полей формы module4-task2
+
+var priceInput = adForm.querySelector('#price');
+var typeSelect = adForm.querySelector('#type');
+var timeInSelect = adForm.querySelector('#timein');
+var timeOutSelect = adForm.querySelector('#timeout');
+var roomNumberSelect = adForm.querySelector('#room_number');
+var guestRoomSelect = adForm.querySelector('#capacity');
+
+var guestsAllOptions = guestRoomSelect.querySelectorAll('option');
+
+
+priceInput.placeholder = MIN_FLAT_PRICE;
+typeSelect.addEventListener('change', function () {
+  if (typeSelect.value === 'bungalo') {
+    priceInput.min = MIN_BUNGALO_PRICE;
+  } else if (typeSelect.value === 'flat') {
+    priceInput.min = MIN_FLAT_PRICE;
+  } else if (typeSelect.value === 'house') {
+    priceInput.min = MIN_HOUSE_PRICE;
+  } else if (typeSelect.value === 'palace') {
+    priceInput.min = MIN_PALACE_PRICE;
+  }
+  priceInput.placeholder = priceInput.min;
+});
+
+timeInSelect.addEventListener('change', function () {
+  timeOutSelect.selectedIndex = timeInSelect.selectedIndex;
+});
+
+timeOutSelect.addEventListener('change', function () {
+  timeInSelect.selectedIndex = timeOutSelect.selectedIndex;
+});
+
+var setDisabled = function (element) {
+  element.setAttribute('disabled', true);
+};
+
+var removeDisabled = function (element) {
+  element.removeAttribute('disabled');
+};
+
+
+var guestsNumbersObject = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
+
+var getGuestOptions = function (array) {
+  for (var j = 0; j < guestsAllOptions.length; j++) {
+    setDisabled(guestsAllOptions[j]);
+  }
+  for (var i = 0; i < array.length; i++) {
+    var guestOptions = guestRoomSelect.querySelector('[value="' + array[i] + '"]');
+    removeDisabled(guestOptions);
+  }
+};
+
+roomNumberSelect.addEventListener('change', function () {
+  if (roomNumberSelect.value === '100') {
+    guestRoomSelect.value = '0';
+  } else {
+    guestRoomSelect.value = roomNumberSelect.value;
+  }
+  getGuestOptions(guestsNumbersObject[roomNumberSelect.value]);
+});
+
 
 mainPin.addEventListener('keydown', onMainPinActivateEnter);
 mainPin.addEventListener('mouseup', onFormActivate);
