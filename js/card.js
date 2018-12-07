@@ -47,7 +47,7 @@
         cardFragment.appendChild(renderCard(window.data.offersArray[i]));
       }
       var mapFilters = document.querySelector('map__filters-container');
-      map.insertBefore(cardFragment, mapFilters);
+      window.util.map.insertBefore(cardFragment, mapFilters);
     }
   };
 })();

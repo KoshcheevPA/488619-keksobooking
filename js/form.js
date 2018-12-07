@@ -1,13 +1,17 @@
 'use strict';
 
 (function () {
+  var MIN_BUNGALO_PRICE = 0;
+  var MIN_FLAT_PRICE = 1000;
+  var MIN_HOUSE_PRICE = 5000;
+  var MIN_PALACE_PRICE = 10000;
 
-  var priceInput = adForm.querySelector('#price');
-  var typeSelect = adForm.querySelector('#type');
-  var timeInSelect = adForm.querySelector('#timein');
-  var timeOutSelect = adForm.querySelector('#timeout');
-  var roomNumberSelect = adForm.querySelector('#room_number');
-  var guestRoomSelect = adForm.querySelector('#capacity');
+  var priceInput = window.util.adForm.querySelector('#price');
+  var typeSelect = window.util.adForm.querySelector('#type');
+  var timeInSelect = window.util.adForm.querySelector('#timein');
+  var timeOutSelect = window.util.adForm.querySelector('#timeout');
+  var roomNumberSelect = window.util.adForm.querySelector('#room_number');
+  var guestRoomSelect = window.util.adForm.querySelector('#capacity');
 
   var guestsAllOptions = guestRoomSelect.querySelectorAll('option');
 
