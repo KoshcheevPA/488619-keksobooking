@@ -1,5 +1,8 @@
+'use strict';
+
 (function () {
-  window.data = {offersArray: [],
+  window.data = {
+    offersArray: [],
     getOffers: function (offersNumber) {
     for (var i = 1; i < offersNumber + 1; i++) {
       var avatarSrc = 'img/avatars/user0' + i + '.png';
@@ -30,6 +33,6 @@
       window.data.offersArray.push(offer);
     }
     return window.data.offersArray;
-  }
-};
+    }
+  };
 })();
