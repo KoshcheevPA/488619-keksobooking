@@ -7,7 +7,7 @@
     for (var i = 1; i < offersNumber + 1; i++) {
       var avatarSrc = 'img/avatars/user0' + i + '.png';
       var locationY = getRandomMinMax(MIN_LOCATION_Y, MAX_LOCATION_Y);
-      var locationX = getRandomMinMax(getLocationX(mapBlockWidth, similarPinElement.offsetWidth)[0], getLocationX(mapBlockWidth, similarPinElement.offsetWidth)[1]);
+      var locationX = getRandomMinMax(getLocationX(mapBlockWidth, window.pin.similarPinElement.offsetWidth)[0], getLocationX(mapBlockWidth, window.pin.similarPinElement.offsetWidth)[1]);
       var offer = {
         autor: {
           avatar: avatarSrc

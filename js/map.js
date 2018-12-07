@@ -118,22 +118,22 @@ var getRandomArrayItems = function (array, arrayLength) {
 // };
 
 //СОЗДАНИЕ МЕТОК
-
-var similarPinElement = document.querySelector('.map__pin');
-var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var pinFragment = document.createDocumentFragment();
-var mapPins = document.querySelector('.map__pins');
-var getNewPin = function (array) {
-  for (var i = 0; i < array.length; i++) {
-    var pinElement = pinTemplate.cloneNode(true);
-    var pinImg = pinElement.querySelector('img');
-    pinTemplate.style = 'left: ' + array[i].location.x + 'px; top: ' + array[i].location.y + 'px;';
-    pinImg.src = array[i].autor.avatar;
-    pinImg.alt = array[i].offer.title;
-    pinFragment.appendChild(pinElement);
-  }
-  mapPins.appendChild(pinFragment);
-};
+//
+// var similarPinElement = document.querySelector('.map__pin');
+// var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+// var pinFragment = document.createDocumentFragment();
+// var mapPins = document.querySelector('.map__pins');
+// var getNewPin = function (array) {
+//   for (var i = 0; i < array.length; i++) {
+//     var pinElement = pinTemplate.cloneNode(true);
+//     var pinImg = pinElement.querySelector('img');
+//     pinTemplate.style = 'left: ' + array[i].location.x + 'px; top: ' + array[i].location.y + 'px;';
+//     pinImg.src = array[i].autor.avatar;
+//     pinImg.alt = array[i].offer.title;
+//     pinFragment.appendChild(pinElement);
+//   }
+//   mapPins.appendChild(pinFragment);
+// };
 
 //СОЗДАНИЕ КАРТОЧЕК
 //
@@ -196,7 +196,7 @@ var onFormActivate = function () {
     formElement[t].removeAttribute('disabled');
   }
   adressInput.value = getPinPosition(mainPin);
-  getNewPin(window.data.getOffers(OFFERS_NUMBER));
+  window.pin.getNewPin(window.data.getOffers(OFFERS_NUMBER));
   window.card.addCard();
 
   var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
