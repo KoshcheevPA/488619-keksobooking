@@ -28,38 +28,38 @@
     return [minLocationX, maxLocationX];
   };
 
-  window.data = {
-    offersArray: [],
-    getOffers: function (offersNumber) {
-      for (var i = 1; i < offersNumber + 1; i++) {
-        var avatarSrc = 'img/avatars/user0' + i + '.png';
-        var locationY = window.util.getRandomMinMax(window.util.MIN_LOCATION_Y, window.util.MAX_LOCATION_Y);
-        var locationX = window.util.getRandomMinMax(getLocationX(window.util.mapBlockWidth, window.pin.similarPinElement.offsetWidth)[0], getLocationX(window.util.mapBlockWidth, window.pin.similarPinElement.offsetWidth)[1]);
-        var offer = {
-          autor: {
-            avatar: avatarSrc
-          },
-          offer: {
-            title: OFFER_TITLES[i - 1],
-            adress: (locationX + ', ' + locationY),
-            price: Math.round(window.util.getRandomMinMax(MIN_PRICE, MAX_PRICE) / 1000) * 1000,
-            type: window.util.getRandom(OFFER_TYPES),
-            rooms: window.util.getRandomMinMax(MIN_ROOMS, MAX_ROOMS),
-            guest: window.util.getRandomMinMax(MIN_GUESTS_NUMBER, MAX_GUESTS_NUMBER),
-            checkin: window.util.getRandom(CHECK),
-            checkout: window.util.getRandom(CHECK),
-            features: window.util.getRandomArrayItems(FEATURES_ARRAY, window.util.getRandomMinMax(0, FEATURES_ARRAY.length + 1)),
-            description: '',
-            photos: window.util.getRandomArrayItems(PHOTOS_ARRAY, window.util.getRandomMinMax(1, PHOTOS_ARRAY.length + 1)),
-          },
-          location: {
-            x: locationX,
-            y: locationY,
-          }
-        };
-        window.data.offersArray.push(offer);
-      }
-      return window.data.offersArray;
-    }
-  };
+  // window.data = {
+  //   offersArray: [],
+  //   getOffers: function (offersNumber) {
+  //     for (var i = 1; i < offersNumber + 1; i++) {
+  //       var avatarSrc = 'img/avatars/user0' + i + '.png';
+  //       var locationY = window.util.getRandomMinMax(window.util.MIN_LOCATION_Y, window.util.MAX_LOCATION_Y);
+  //       var locationX = window.util.getRandomMinMax(getLocationX(window.util.mapBlockWidth, window.pin.similarPinElement.offsetWidth)[0], getLocationX(window.util.mapBlockWidth, window.pin.similarPinElement.offsetWidth)[1]);
+  //       var offer = {
+  //         autor: {
+  //           avatar: avatarSrc
+  //         },
+  //         offer: {
+  //           title: OFFER_TITLES[i - 1],
+  //           adress: (locationX + ', ' + locationY),
+  //           price: Math.round(window.util.getRandomMinMax(MIN_PRICE, MAX_PRICE) / 1000) * 1000,
+  //           type: window.util.getRandom(OFFER_TYPES),
+  //           rooms: window.util.getRandomMinMax(MIN_ROOMS, MAX_ROOMS),
+  //           guest: window.util.getRandomMinMax(MIN_GUESTS_NUMBER, MAX_GUESTS_NUMBER),
+  //           checkin: window.util.getRandom(CHECK),
+  //           checkout: window.util.getRandom(CHECK),
+  //           features: window.util.getRandomArrayItems(FEATURES_ARRAY, window.util.getRandomMinMax(0, FEATURES_ARRAY.length + 1)),
+  //           description: '',
+  //           photos: window.util.getRandomArrayItems(PHOTOS_ARRAY, window.util.getRandomMinMax(1, PHOTOS_ARRAY.length + 1)),
+  //         },
+  //         location: {
+  //           x: locationX,
+  //           y: locationY,
+  //         }
+  //       };
+  //       window.data.offersArray.push(offer);
+  //     }
+  //     return window.data.offersArray;
+  //   }
+  // };
 })();

@@ -11,7 +11,7 @@
     cardElement.querySelector('.popup__text--capacity').textContent = object.offer.rooms + ' комнаты для ' + object.offer.guest + ' гостей';
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
     cardElement.querySelector('.popup__description').textContent = object.offer.description;
-    cardElement.querySelector('.popup__avatar').src = object.autor.avatar;
+    cardElement.querySelector('.popup__avatar').src = object.author.avatar;
 
     var featuresList = cardElement.querySelector('.popup__features');
     var featuresItem = featuresList.querySelector('li');
@@ -41,10 +41,10 @@
   };
 
   window.card = {
-    addCard: function () {
+    addCard: function (array) {
       var cardFragment = document.createDocumentFragment();
-      for (var i = 0; i < window.data.offersArray.length; i++) {
-        cardFragment.appendChild(renderCard(window.data.offersArray[i]));
+      for (var i = 0; i < array.length; i++) {
+        cardFragment.appendChild(renderCard(array[i]));
       }
       var mapFilters = document.querySelector('map__filters-container');
       window.util.map.insertBefore(cardFragment, mapFilters);

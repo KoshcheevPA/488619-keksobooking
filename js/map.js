@@ -18,6 +18,7 @@
   };
 
   pageTurnOff();
+  window.backend.load(window.pin.getNewPin, 'error');
 
   var mainPin = document.querySelector('.map__pin--main');
   adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
@@ -30,12 +31,15 @@
       formElement[t].removeAttribute('disabled');
     }
     adressInput.value = window.util.getPinPosition(mainPin);
-    window.pin.getNewPin(window.data.getOffers(OFFERS_NUMBER));
-    window.card.addCard();
+    // window.pin.getNewPin(window.data.getOffers(OFFERS_NUMBER));
 
-    var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     var mapCard = document.querySelectorAll('.map__card');
+    var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     var popupCross = document.querySelectorAll('.popup__close');
+
+    for (var k = 0; k < mapPin.length; k++) {
+      mapPin[k].classList.remove('hidden');
+    }
 
     var onPinClick = function (pin, card) {
       pin.addEventListener('click', function () {
