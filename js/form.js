@@ -81,7 +81,7 @@
   var errorButton = errorMessage.querySelector('.error__button');
 
 
-  var closeSuccess = function (evt) {
+  var closeSuccess = function () {
     main.removeChild(successMessage);
     document.removeEventListener('keydown', closeSuccessEsc);
     document.removeEventListener('click', closeSuccess);
@@ -96,13 +96,13 @@
     }
   };
 
-  var onSuccessShow = function (evt) {
+  var onSuccessShow = function () {
     document.addEventListener('keydown', closeSuccessEsc);
     document.addEventListener('click', closeSuccess);
     main.appendChild(successMessage);
   };
 
-  var closeError = function (evt) {
+  var closeError = function () {
     main.removeChild(errorMessage);
     errorMessage.removeEventListener('click', closeError);
     document.removeEventListener('keydown', closeErrorEsc);
@@ -119,7 +119,7 @@
     }
   };
 
-  var onErrorShow = function (evt) {
+  var onErrorShow = function () {
     document.addEventListener('keydown', closeErrorEsc);
     document.addEventListener('click', closeError);
     errorButton.addEventListener('click', closeError);
@@ -162,8 +162,4 @@
   resetButton.addEventListener('click', resetPage);
 
   window.util.adForm.addEventListener('submit', onFormSubmit);
-
-  // window.form = {
-  //   deleteEvent: deleteEvent
-  // };
 })();

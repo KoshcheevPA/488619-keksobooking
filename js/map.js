@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var OFFERS_NUMBER = 8;
+  // var OFFERS_NUMBER = 8;
   var MIN_LOCATION_X = 0;
   var ESC_BUTTON = 27;
   var ENTER_BUTTON = 13;
