@@ -6,6 +6,7 @@
   var pinFragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
   window.pin = {
+    mapPins: mapPins,
     similarPinElement: similarPinElement,
     getNewPin: function (array) {
       for (var i = 0; i < array.length; i++) {
@@ -16,6 +17,9 @@
         pinImg.alt = array[i].offer.title;
         pinFragment.appendChild(pinElement);
         pinElement.classList.add('hidden');
+        if (array.offer === 0) {
+          pinElement.style = 'display: none;';
+        }
       }
       window.card.addCard(array);
       mapPins.appendChild(pinFragment);

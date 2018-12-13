@@ -71,4 +71,35 @@
     }
     getGuestOptions(guestsNumbersObject[roomNumberSelect.value]);
   });
+
+  var submitSuccess = function (evt) {
+    window.map.turnOffMap();
+    window.map.setDisabled();
+    window.util.adForm.reset();
+    window.map.mainPin.style.left = window.pin.mapPins.offsetWidth / 2 - window.map.mainPin.offsetWidth / 2 + 'px';
+    window.map.mainPin.style.top = window.pin.mapPins.offsetHeight / 2 - window.map.mainPin.offsetHeight / 2 + 'px';
+    window.map.adressInput.value = window.util.getPinPosition(window.map.mainPin);
+    var mapCard = document.querySelectorAll('.map__card');
+    var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < mapPin.length; i++) {
+      if (mapPin[i]) {
+        mapPin[i].remove();
+      }
+      if (mapCard[i]) {
+        mapCard[i].remove();
+      }
+    }
+  };
+
+  var getError = function () {
+    console.log(22);
+  };
+
+  var onFormSubmit = function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(window.util.adForm), submitSuccess, getError);
+    window.util.adForm.removeEventListener('submit', onFormSubmit);
+  };
+
+  window.util.adForm.addEventListener('submit', onFormSubmit);
 })();

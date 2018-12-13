@@ -8,24 +8,37 @@
     cardElement.querySelector('.popup__title').textContent = object.offer.title;
     cardElement.querySelector('.popup__text--address').textContent = object.offer.adress;
     cardElement.querySelector('.popup__text--price').textContent = object.offer.price + ' ₽/ночь';
-    cardElement.querySelector('.popup__text--capacity').textContent = object.offer.rooms + ' комнаты для ' + object.offer.guest + ' гостей';
+    cardElement.querySelector('.popup__text--capacity').textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
     cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
     cardElement.querySelector('.popup__description').textContent = object.offer.description;
     cardElement.querySelector('.popup__avatar').src = object.author.avatar;
 
+    var createFeatures = function (features) {
+      var fragment = document.createDocumentFragment();
+      for (var i = 0; i < features.length; i++) {
+        var featureItem = document.createElement('li');
+        featureItem.className = 'popup__feature popup__feature--' + features[i];
+        fragment.appendChild(featureItem);
+      }
+      return fragment;
+    };
+
     var featuresList = cardElement.querySelector('.popup__features');
-    var featuresItem = featuresList.querySelector('li');
-    for (var i = 0; i < object.offer.features.length; i++) {
-      featuresItem.textContent = object.offer.features[i];
-    }
+    featuresList.textContent = '';
+    featuresList.appendChild(createFeatures(object.offer.features));
 
     var housePhotos = cardElement.querySelector('.popup__photos');
     var housePhoto = cardElement.querySelector('.popup__photo');
     housePhoto.src = object.offer.photos[0];
-    for (var j = 1; j < object.offer.photos.length; j++) {
-      var photoElement = housePhoto.cloneNode(true);
-      photoElement.src = object.offer.photos[j];
-      housePhotos.appendChild(photoElement);
+
+    if (object.offer.photos.length !== 0) {
+      for (var j = 1; j < object.offer.photos.length; j++) {
+        var photoElement = housePhoto.cloneNode(true);
+        photoElement.src = object.offer.photos[j];
+        housePhotos.appendChild(photoElement);
+      }
+    } else {
+      housePhotos.style = 'display: none';
     }
 
     if (object.offer.type === 'flat') {

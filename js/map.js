@@ -10,15 +10,20 @@
   var formElement = window.util.adForm.querySelectorAll('.ad-form__element');
   var adressInput = document.querySelector('#address');
 
-  var pageTurnOff = function () {
+  var setDisabled = function () {
     formHeader.setAttribute('disabled', 'true');
     for (var k = 0; k < formElement.length; k++) {
       formElement[k].setAttribute('disabled', 'true');
     }
   };
 
-  pageTurnOff();
-  window.backend.load(window.pin.getNewPin, 'error');
+  var turnOffMap = function () {
+    adressInput.value = window.util.getPinPosition(mainPin);
+    window.util.map.classList.add('map--faded');
+    window.util.adForm.classList.add('ad-form--disabled');
+  };
+
+  setDisabled();
 
   var mainPin = document.querySelector('.map__pin--main');
   adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
@@ -26,12 +31,13 @@
   var onFormActivate = function () {
     window.util.map.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
+
     formHeader.removeAttribute('disabled');
     for (var t = 0; t < formElement.length; t++) {
       formElement[t].removeAttribute('disabled');
     }
+
     adressInput.value = window.util.getPinPosition(mainPin);
-    // window.pin.getNewPin(window.data.getOffers(OFFERS_NUMBER));
 
     var mapCard = document.querySelectorAll('.map__card');
     var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -77,7 +83,6 @@
       popupCross[l].addEventListener('click', onPopupClose);
       document.addEventListener('keydown', onPopupCloseEsc);
     }
-    mainPin.removeEventListener('mouseup', onFormActivate);
   };
 
   var onMainPinActivateEnter = function (evt) {
@@ -89,6 +94,7 @@
 
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
+    window.backend.load(window.pin.getNewPin, 'error');
 
     var startCoords = {
       x: evt.clientX,
@@ -134,7 +140,6 @@
       adressInput.value = window.util.getPinPosition(mainPin);
 
       document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
     };
 
     document.addEventListener('mousemove', onMouseMove);
@@ -143,4 +148,11 @@
 
   mainPin.addEventListener('keydown', onMainPinActivateEnter);
   mainPin.addEventListener('mouseup', onFormActivate);
+
+  window.map = {
+    setDisabled: setDisabled,
+    turnOffMap: turnOffMap,
+    adressInput: adressInput,
+    mainPin: mainPin
+  };
 })();

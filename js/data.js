@@ -19,7 +19,7 @@
   ];
   var OFFER_TYPES = ['palace', 'flat', 'house', 'bungalo'];
   var CHECK = ['12:00', '13:00', '14:00'];
-  var FEATURES_ARRAY = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+  // var FEATURES_ARRAY = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var PHOTOS_ARRAY = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
   var getLocationX = function (blockWidth, pinWidth) {
