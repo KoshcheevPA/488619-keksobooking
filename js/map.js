@@ -29,6 +29,7 @@
   adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
 
   var onFormActivate = function () {
+    // window.form.deleteEvent();
     window.util.map.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
 
@@ -81,8 +82,8 @@
     }
     for (var l = 0; l < mapPin.length; l++) {
       popupCross[l].addEventListener('click', onPopupClose);
-      document.addEventListener('keydown', onPopupCloseEsc);
     }
+    document.addEventListener('keydown', onPopupCloseEsc);
   };
 
   var onMainPinActivateEnter = function (evt) {
@@ -93,8 +94,8 @@
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
-    evt.preventDefault();
     window.backend.load(window.pin.getNewPin, 'error');
+    evt.preventDefault();
 
     var startCoords = {
       x: evt.clientX,
@@ -138,10 +139,9 @@
     var onMouseUp = function (evtUp) {
       evtUp.preventDefault();
       adressInput.value = window.util.getPinPosition(mainPin);
-
       document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
     };
-
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
@@ -153,6 +153,7 @@
     setDisabled: setDisabled,
     turnOffMap: turnOffMap,
     adressInput: adressInput,
-    mainPin: mainPin
+    mainPin: mainPin,
+    escButton: ESC_BUTTON
   };
 })();
