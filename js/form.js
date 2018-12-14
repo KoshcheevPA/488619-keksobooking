@@ -89,7 +89,7 @@
 
   var closeSuccessEsc = function (evt) {
     evt.preventDefault();
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === window.map.escButton) {
       main.removeChild(successMessage);
       document.removeEventListener('keydown', closeSuccessEsc);
       document.removeEventListener('click', closeSuccess);
