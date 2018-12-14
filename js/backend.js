@@ -2,7 +2,7 @@
 
 (function () {
 
-  var makeRequest = function (url, method, data, onLoad, onError) {
+  var makeRequest = function (url, method, onLoad, onError, data) {
     var xhr = new XMLHttpRequest();
     xhr.timeout = 10000;
     xhr.responseType = 'json';
@@ -29,12 +29,12 @@
 
   var urlLoad = 'https://js.dump.academy/keksobooking/data';
   var backendLoad = function (onLoad, onError) {
-    makeRequest(urlLoad, 'GET', '', onLoad, onError);
+    makeRequest(urlLoad, 'GET', onLoad, onError);
   };
 
   var urlSave = 'https://js.dump.academy/keksobooking';
   var backendSave = function (data, onLoad, onError) {
-    makeRequest(urlSave, 'POST', data, onLoad, onError);
+    makeRequest(urlSave, 'POST', onLoad, onError, data);
   };
 
   window.backend = {
