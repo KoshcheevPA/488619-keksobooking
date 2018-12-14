@@ -111,7 +111,7 @@
 
   var closeErrorEsc = function (evt) {
     evt.preventDefault();
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === window.map.escButton) {
       main.removeChild(errorMessage);
       errorMessage.removeEventListener('click', closeError);
       document.removeEventListener('keydown', closeErrorEsc);
