@@ -41,9 +41,11 @@
     var mapCard = document.querySelectorAll('.map__card');
     var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     var popupCross = document.querySelectorAll('.popup__close');
+
     if (mapPin.length === 0) {
       window.backend.load(window.pin.getNewPin, 'Ошибка');
     }
+
     for (var k = 0; k < mapPin.length; k++) {
       mapPin[k].classList.remove('hidden');
     }
