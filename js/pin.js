@@ -16,7 +16,7 @@
         pinImg.src = array[i].author.avatar;
         pinImg.alt = array[i].offer.title;
         pinFragment.appendChild(pinElement);
-        pinElement.classList.add('hidden');
+        // pinElement.classList.add('hidden');
         if (array.offer === 0) {
           pinElement.style = 'display: none;';
         }
