@@ -29,9 +29,9 @@
 
     var housePhotos = cardElement.querySelector('.popup__photos');
     var housePhoto = cardElement.querySelector('.popup__photo');
-    housePhoto.src = object.offer.photos[0];
 
     if (object.offer.photos.length !== 0) {
+      housePhoto.src = object.offer.photos[0];
       for (var j = 1; j < object.offer.photos.length; j++) {
         var photoElement = housePhoto.cloneNode(true);
         photoElement.src = object.offer.photos[j];
