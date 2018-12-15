@@ -16,10 +16,6 @@
     }
   };
 
-  var getErrorAlert = function () {
-    alert('Ошибка');
-  };
-
   var turnOffMap = function () {
     adressInput.value = window.util.getPinPosition(mainPin);
     window.util.map.classList.add('map--faded');
@@ -46,7 +42,7 @@
     var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     var popupCross = document.querySelectorAll('.popup__close');
     if (mapCard.length === 0) {
-      window.backend.load(window.pin.getNewPin, getErrorAlert);
+      window.backend.load(window.pin.getNewPin, 'Ошибка');
     }
     for (var k = 0; k < mapPin.length; k++) {
       mapPin[k].classList.remove('hidden');
