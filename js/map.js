@@ -28,6 +28,7 @@
   adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
 
   var onFormActivate = function () {
+    window.backend.load(window.pin.getNewPin, 'error');
     window.util.map.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
 
@@ -94,7 +95,7 @@
   };
 
   mainPin.addEventListener('mousedown', function (evt) {
-    window.backend.load(window.pin.getNewPin, 'error');
+    // window.backend.load(window.pin.getNewPin, 'error');
     evt.preventDefault();
 
     var startCoords = {
@@ -137,6 +138,7 @@
     };
 
     var onMouseUp = function (evtUp) {
+      // window.backend.load(window.pin.getNewPin, 'error');
       evtUp.preventDefault();
       adressInput.value = window.util.getPinPosition(mainPin);
       document.removeEventListener('mousemove', onMouseMove);
