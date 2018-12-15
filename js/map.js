@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  // var OFFERS_NUMBER = 8;
   var MIN_LOCATION_X = 0;
   var ESC_BUTTON = 27;
   var ENTER_BUTTON = 13;
@@ -29,7 +28,6 @@
   adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
 
   var onFormActivate = function () {
-    // window.form.deleteEvent();
     window.util.map.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
 
@@ -50,6 +48,7 @@
 
     var onPinClick = function (pin, card) {
       pin.addEventListener('click', function () {
+        document.addEventListener('keydown', onPopupCloseEsc);
         for (var i = 0; i < mapCard.length; i++) {
           if (!mapCard[i].classList.contains('hidden')) {
             mapCard[i].classList.add('hidden');
@@ -63,12 +62,14 @@
       for (var i = 0; i < mapCard.length; i++) {
         mapCard[i].classList.add('hidden');
       }
+      document.removeEventListener('keydown', onPopupCloseEsc);
     };
 
     var onPopupCloseEsc = function (evt) {
       for (var i = 0; i < mapCard.length; i++) {
         if (evt.keyCode === ESC_BUTTON) {
           mapCard[i].classList.add('hidden');
+          document.removeEventListener('keydown', onPopupCloseEsc);
         }
       }
     };
@@ -83,7 +84,6 @@
     for (var l = 0; l < mapPin.length; l++) {
       popupCross[l].addEventListener('click', onPopupClose);
     }
-    document.addEventListener('keydown', onPopupCloseEsc);
   };
 
   var onMainPinActivateEnter = function (evt) {
