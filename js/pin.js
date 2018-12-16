@@ -26,36 +26,36 @@
       var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
       var popupCross = document.querySelectorAll('.popup__close');
 
-      mapPin.forEach(function (mapPin) {
-        mapPin.classList.remove('hidden');
-      });
+      for (var k = 0; k < mapPin.length; k++) {
+        mapPin[k].classList.remove('hidden');
+      }
 
       var onPinClick = function (pin, card) {
         pin.addEventListener('click', function () {
           document.addEventListener('keydown', onPopupCloseEsc);
-          mapCard.forEach(function (mapCard) {
-            if (!mapCard.classList.contains('hidden')) {
-              mapCard.classList.add('hidden');
+          for (var j = 0; j < mapCard.length; j++) {
+            if (!mapCard[j].classList.contains('hidden')) {
+              mapCard[j].classList.add('hidden');
             }
-          });
+          }
           card.classList.remove('hidden');
         });
       };
 
       var onPopupClose = function () {
-        mapCard.forEach(function (mapCard) {
-          mapCard.classList.add('hidden');
-        });
+        for (var j = 0; i < mapCard.length; j++) {
+          mapCard[j].classList.add('hidden');
+        }
         document.removeEventListener('keydown', onPopupCloseEsc);
       };
 
       var onPopupCloseEsc = function (evt) {
-        mapCard.forEach(function (mapCard) {
+        for (var t = 0; t < mapCard.length; t++) {
           if (evt.keyCode === window.map.escButton) {
-            mapCard.classList.add('hidden');
+            mapCard[t].classList.add('hidden');
             document.removeEventListener('keydown', onPopupCloseEsc);
           }
-        });
+        }
       };
 
       for (var j = 0; j < mapPin.length; j++) {
@@ -66,8 +66,8 @@
         }
       }
 
-      for (var k = 0; k < mapPin.length; k++) {
-        popupCross[k].addEventListener('click', onPopupClose);
+      for (var l = 0; l < mapPin.length; l++) {
+        popupCross[l].addEventListener('click', onPopupClose);
       }
     }
   };
