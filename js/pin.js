@@ -32,7 +32,7 @@
 
       var onPinClick = function (pin, card) {
         pin.addEventListener('click', function () {
-        document.addEventListener('keydown', onPopupCloseEsc);
+          document.addEventListener('keydown', onPopupCloseEsc);
           for (var i = 0; i < mapCard.length; i++) {
             if (!mapCard[i].classList.contains('hidden')) {
               mapCard[i].classList.add('hidden');
@@ -43,16 +43,16 @@
       };
 
       var onPopupClose = function () {
-        for (var i = 0; i < mapCard.length; i++) {
-          mapCard[i].classList.add('hidden');
+        for (var j = 0; i < mapCard.length; j++) {
+          mapCard[j].classList.add('hidden');
         }
         document.removeEventListener('keydown', onPopupCloseEsc);
       };
 
       var onPopupCloseEsc = function (evt) {
-        for (var i = 0; i < mapCard.length; i++) {
+        for (var t = 0; t < mapCard.length; t++) {
           if (evt.keyCode === window.map.escButton) {
-            mapCard[i].classList.add('hidden');
+            mapCard[t].classList.add('hidden');
             document.removeEventListener('keydown', onPopupCloseEsc);
           }
         }
