@@ -5,13 +5,44 @@
   var renderCard = function (object) {
     var cardElement = similarCardTemplate.cloneNode(true);
     cardElement.classList.add('hidden');
-    cardElement.querySelector('.popup__title').textContent = object.offer.title;
-    cardElement.querySelector('.popup__text--address').textContent = object.offer.adress;
-    cardElement.querySelector('.popup__text--price').textContent = object.offer.price + ' ₽/ночь';
-    cardElement.querySelector('.popup__text--capacity').textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
-    cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
-    cardElement.querySelector('.popup__description').textContent = object.offer.description;
+    if (object.offer.title) {
+      cardElement.querySelector('.popup__title').textContent = object.offer.title;
+    } else {
+      cardElement.querySelector('.popup__title').style = 'display: none';
+    }
+
+    if (object.offer.address) {
+      cardElement.querySelector('.popup__text--address').textContent = object.offer.address;
+    } else {
+      cardElement.querySelector('.popup__text--address').style = 'display: none';
+    }
+
+    if (object.offer.price) {
+      cardElement.querySelector('.popup__text--price').textContent = object.offer.price + ' ₽/ночь';
+    } else {
+      cardElement.querySelector('.popup__text--price').style = 'display: none';
+    }
+
+    if (object.offer.rooms && object.offer.guests) {
+      cardElement.querySelector('.popup__text--capacity').textContent = object.offer.rooms + ' комнаты для ' + object.offer.guests + ' гостей';
+    } else {
+      cardElement.querySelector('.popup__text--capacity').style = 'display: none';
+    }
+
+    if (object.offer.checkin && object.offer.checkout) {
+      cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + object.offer.checkin + ', выезд до ' + object.offer.checkout;
+    } else {
+      cardElement.querySelector('.popup__text--time').style = 'display: none';
+    }
+
+    if (object.offer.description) {
+      cardElement.querySelector('.popup__description').textContent = object.offer.description;
+    } else {
+      cardElement.querySelector('.popup__description').style = 'display: none';
+    }
+
     cardElement.querySelector('.popup__avatar').src = object.author.avatar;
+
 
     var createFeatures = function (features) {
       var fragment = document.createDocumentFragment();

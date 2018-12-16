@@ -16,13 +16,59 @@
         pinImg.src = array[i].author.avatar;
         pinImg.alt = array[i].offer.title;
         pinFragment.appendChild(pinElement);
-        // pinElement.classList.add('hidden');
         if (array.offer === 0) {
           pinElement.style = 'display: none;';
         }
       }
       window.card.addCard(array);
       mapPins.appendChild(pinFragment);
+      var mapCard = document.querySelectorAll('.map__card');
+      var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+      var popupCross = document.querySelectorAll('.popup__close');
+
+      for (var k = 0; k < mapPin.length; k++) {
+        mapPin[k].classList.remove('hidden');
+      }
+
+      var onPinClick = function (pin, card) {
+        pin.addEventListener('click', function () {
+        document.addEventListener('keydown', onPopupCloseEsc);
+          for (var i = 0; i < mapCard.length; i++) {
+            if (!mapCard[i].classList.contains('hidden')) {
+              mapCard[i].classList.add('hidden');
+            }
+          }
+          card.classList.remove('hidden');
+        });
+      };
+
+      var onPopupClose = function () {
+        for (var i = 0; i < mapCard.length; i++) {
+          mapCard[i].classList.add('hidden');
+        }
+        document.removeEventListener('keydown', onPopupCloseEsc);
+      };
+
+      var onPopupCloseEsc = function (evt) {
+        for (var i = 0; i < mapCard.length; i++) {
+          if (evt.keyCode === window.map.escButton) {
+            mapCard[i].classList.add('hidden');
+            document.removeEventListener('keydown', onPopupCloseEsc);
+          }
+        }
+      };
+
+      for (var j = 0; j < mapPin.length; j++) {
+        if (mapCard[j].classList.contains('hidden')) {
+          onPinClick(mapPin[j], mapCard[j]);
+        } else {
+          mapCard[j].classList.add('hidden');
+        }
+      }
+
+      for (var l = 0; l < mapPin.length; l++) {
+        popupCross[l].addEventListener('click', onPopupClose);
+      }
     }
   };
 })();
