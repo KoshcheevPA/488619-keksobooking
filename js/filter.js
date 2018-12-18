@@ -68,27 +68,27 @@
       return item.offer.price >= PRICE.LOW && item.offer.price <= PRICE.HIGH;
     } else if (housingPrice.value === 'high') {
       return item.offer.price > PRICE.HIGH;
-    } else if (housingPrice.value === defaultValue) {
+    } else {
       return housingPrice.value === defaultValue;
     }
   };
 
- var compareFeatures = function (item) {
-  var featuresArray = [];
-  var checkedFeatures = housingFeatures.querySelectorAll('.map__checkbox:checked');
-  var collectedFeatures = function (checkedInput, element) {
-    if (checkedInput.value === element) {
-      featuresArray.push(element);
-    }
-  };
+  var compareFeatures = function (item) {
+    var featuresArray = [];
+    var checkedFeatures = housingFeatures.querySelectorAll('.map__checkbox:checked');
+    var collectedFeatures = function (checkedInput, element) {
+      if (checkedInput.value === element) {
+        featuresArray.push(element);
+      }
+    };
 
-  for (var i = 0; i < checkedFeatures.length; i++) {
-    for (var j = 0; j < item.offer.features.length; j++) {
-      collectedFeatures(checkedFeatures[i], item.offer.features[j]);
+    for (var i = 0; i < checkedFeatures.length; i++) {
+      for (var j = 0; j < item.offer.features.length; j++) {
+        collectedFeatures(checkedFeatures[i], item.offer.features[j]);
+      }
     }
-  }
-  return featuresArray.length === checkedFeatures.length;
-};
+    return featuresArray.length === checkedFeatures.length;
+  };
 
   var onFilterChange = window.debounce(function () {
     window.map.getFilterPins();

@@ -48,11 +48,10 @@
   };
 
   var onLoad = function (array) {
-  window.filter.removeDisabledFilter();
-  window.pin.getNewPin(array);
-  filterArray = array;
-  console.log(filterArray);
-};
+    window.filter.removeDisabledFilter();
+    window.pin.getNewPin(array);
+    filterArray = array;
+  };
 
   var onMainPinActivateEnter = function (evt) {
     if (evt.keyCode === ENTER_BUTTON) {
