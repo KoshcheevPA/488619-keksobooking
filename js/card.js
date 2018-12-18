@@ -81,10 +81,6 @@
     } else if (object.offer.type === 'palace') {
       cardElement.querySelector('.popup__type').textContent = 'Дворец';
     }
-    // var filter = object.offer.filter(function (item) {
-    //   return object.offer.guests === '3';
-    // });
-    console.log(object);
     return cardElement;
   };
 

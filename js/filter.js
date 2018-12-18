@@ -3,10 +3,8 @@
 (function () {
 
   var PRICE = {
-    'any': [0, Infinity],
-    'low': [0, 10000],
-    'middle': [10000, 50000],
-    'high': [50000, Infinity]
+    LOW: 10000,
+    HIGH: 50000
   };
 
   var defaultValue = 'any';
@@ -27,18 +25,30 @@
   };
 
   var compareHousingRooms = function (item) {
-    if (item.offer.rooms === housingRooms.value) {
-      return item.offer.rooms === housingRooms.value;
+    if (item.offer.rooms.toString() === housingRooms.value) {
+      return item.offer.rooms.toString() === housingRooms.value;
     } else {
       return housingRooms.value === defaultValue;
     }
   };
 
   var compareHousingGuests = function (item) {
-    if (item.offer.guests === housingGuests.value) {
-      return item.offer.guests === housingGuests.value;
+    if (item.offer.guests.toString() === housingGuests.value) {
+      return item.offer.guests.toString() === housingGuests.value;
     } else {
       return housingGuests.value === defaultValue;
+    }
+  };
+
+  var comparePrice = function (item) {
+    if (item.offer.price < PRICE.LOW) {
+      return housingPrice.value === 'low';
+    } else if (item.offer.price >= PRICE.LOW && item.offer.price <= PRICE.HIGH) {
+      return housingPrice.value === 'middle';
+    } else if (item.offer.price > PRICE.HIGH) {
+      return housingPrice.value === 'high';
+    } else {
+      housingPrice.value === defaultValue;
     }
   };
 
@@ -48,14 +58,16 @@
 
   var addFilterChange = function () {
     housingType.addEventListener('change', onFilterChange);
-    console.log('change');
+    housingRooms.addEventListener('change', onFilterChange);
+    housingGuests.addEventListener('change', onFilterChange);
+    housingPrice.addEventListener('change', onFilterChange);
   };
 
   addFilterChange();
 
   var getFilterArray = function (array) {
     var filteredArray = array.filter(function (item) {
-      return compareHousingType(item);
+      return compareHousingType(item) && compareHousingGuests(item) && compareHousingRooms(item) && comparePrice(item);
     });
 
     return filteredArray;

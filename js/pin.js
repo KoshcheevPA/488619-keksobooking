@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var PIN_AMOUNT = 5;
   var similarPinElement = document.querySelector('.map__pin');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinFragment = document.createDocumentFragment();
@@ -9,7 +10,7 @@
     mapPins: mapPins,
     similarPinElement: similarPinElement,
     getNewPin: function (array) {
-      for (var i = 0; i < array.length; i++) {
+      for (var i = 0; i < Math.min(array.length, PIN_AMOUNT); i++) {
         var pinElement = pinTemplate.cloneNode(true);
         var pinImg = pinElement.querySelector('img');
         pinTemplate.style = 'left: ' + array[i].location.x + 'px; top: ' + array[i].location.y + 'px;';

@@ -45,12 +45,11 @@
     window.form.removeMapPins();
     window.form.removeCard();
     window.pin.getNewPin(filteredPins);
-    // window.filter.filterArray = array;
   };
 
-  var onLoad = function (responce) {
-  window.pin.getNewPin(responce);
-  filterArray = responce;
+  var onLoad = function (array) {
+  window.pin.getNewPin(array);
+  filterArray = array;
   console.log(filterArray);
 };
 
