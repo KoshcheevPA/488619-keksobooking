@@ -81,6 +81,10 @@
     } else if (object.offer.type === 'palace') {
       cardElement.querySelector('.popup__type').textContent = 'Дворец';
     }
+    // var filter = object.offer.filter(function (item) {
+    //   return object.offer.guests === '3';
+    // });
+    console.log(object);
     return cardElement;
   };
 
@@ -90,8 +94,8 @@
       for (var i = 0; i < array.length; i++) {
         cardFragment.appendChild(renderCard(array[i]));
       }
-      var mapFilters = document.querySelector('map__filters-container');
-      window.util.map.insertBefore(cardFragment, mapFilters);
+      var mapFiltersContainer = document.querySelector('map__filters-container');
+      window.util.map.insertBefore(cardFragment, mapFiltersContainer);
     }
   };
 })();

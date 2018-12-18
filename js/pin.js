@@ -43,7 +43,7 @@
       };
 
       var onPopupClose = function () {
-        for (var j = 0; i < mapCard.length; j++) {
+        for (var j = 0; j < mapCard.length; j++) {
           mapCard[j].classList.add('hidden');
         }
         document.removeEventListener('keydown', onPopupCloseEsc);

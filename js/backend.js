@@ -23,6 +23,7 @@
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
 
+    console.log(xhr);
     xhr.open(method, url);
     xhr.send(data);
   };
