@@ -44,7 +44,7 @@
     if (housingPrice.value === 'low') {
       return item.offer.price < PRICE.LOW;
     } else if (housingPrice.value === 'middle') {
-      return item.offer.price >= PRICE.LOW && item.offer.price <= PRICE.HIGH
+      return item.offer.price >= PRICE.LOW && item.offer.price <= PRICE.HIGH;
     } else if (housingPrice.value === 'high') {
       return item.offer.price > PRICE.HIGH;
     } else if (housingPrice.value === defaultValue) {
