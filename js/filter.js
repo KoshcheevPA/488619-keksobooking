@@ -73,9 +73,24 @@
     }
   };
 
-  var compareFeatures = function (item) {
+ var compareFeatures = function (item) {
+  var featuresArray = [];
+  var checkedFeatures = housingFeatures.querySelectorAll('.map__checkbox:checked');
 
+  var collectedFeatures = function (checkedInput, element) {
+    if (checkedInput.value === element) {
+      featuresArray.push(element);
+    }
   };
+
+  for (var i = 0; i < checkedFeatures.length; i++) {
+    for (var j = 0; j < item.offer.features.length; j++) {
+      collectedFeatures(checkedFeatures[i], item.offer.features[j]);
+    }
+  }
+
+  return featuresArray.length === checkedFeatures.length;
+};
 
   var onFilterChange = function () {
     window.map.getFilterPins();
@@ -86,13 +101,16 @@
     housingRooms.addEventListener('change', onFilterChange);
     housingGuests.addEventListener('change', onFilterChange);
     housingPrice.addEventListener('change', onFilterChange);
+    housingFeaturesCheckbox.forEach(function (it) {
+      it.addEventListener('change', onFilterChange);
+    });
   };
 
   addFilterChange();
 
   var getFilterArray = function (array) {
     var filteredArray = array.filter(function (item) {
-      return compareHousingType(item) && compareHousingGuests(item) && compareHousingRooms(item) && comparePrice(item);
+      return compareHousingType(item) && compareHousingGuests(item) && compareHousingRooms(item) && comparePrice(item) && compareFeatures(item);
     });
 
     return filteredArray;

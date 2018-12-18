@@ -7,6 +7,7 @@
   var pinFragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
   window.pin = {
+    MAX_PIN_AMOUNT: MAX_PIN_AMOUNT,
     mapPins: mapPins,
     similarPinElement: similarPinElement,
     getNewPin: function (array) {
