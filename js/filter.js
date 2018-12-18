@@ -76,7 +76,6 @@
  var compareFeatures = function (item) {
   var featuresArray = [];
   var checkedFeatures = housingFeatures.querySelectorAll('.map__checkbox:checked');
-
   var collectedFeatures = function (checkedInput, element) {
     if (checkedInput.value === element) {
       featuresArray.push(element);
@@ -88,13 +87,12 @@
       collectedFeatures(checkedFeatures[i], item.offer.features[j]);
     }
   }
-
   return featuresArray.length === checkedFeatures.length;
 };
 
-  var onFilterChange = function () {
+  var onFilterChange = window.debounce(function () {
     window.map.getFilterPins();
-  };
+  });
 
   var addFilterChange = function () {
     housingType.addEventListener('change', onFilterChange);
