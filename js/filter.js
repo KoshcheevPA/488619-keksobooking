@@ -41,14 +41,14 @@
   };
 
   var comparePrice = function (item) {
-    if (item.offer.price < PRICE.LOW) {
-      return housingPrice.value === 'low';
-    } else if (item.offer.price >= PRICE.LOW && item.offer.price <= PRICE.HIGH) {
-      return housingPrice.value === 'middle';
-    } else if (item.offer.price > PRICE.HIGH) {
-      return housingPrice.value === 'high';
-    } else {
-      housingPrice.value === defaultValue;
+    if (housingPrice.value === 'low') {
+      return item.offer.price < PRICE.LOW;
+    } else if (housingPrice.value === 'middle') {
+      return item.offer.price >= PRICE.LOW && item.offer.price <= PRICE.HIGH
+    } else if (housingPrice.value === 'high') {
+      return item.offer.price > PRICE.HIGH;
+    } else if (housingPrice.value === defaultValue) {
+      return housingPrice.value === defaultValue;
     }
   };
 
