@@ -126,6 +126,24 @@
     main.appendChild(errorMessage);
   };
 
+  var removeMapPins = function () {
+    var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < mapPin.length; i++) {
+      if (mapPin[i]) {
+        mapPin[i].remove();
+      }
+    }
+  };
+
+  var removeCard = function () {
+    var mapCard = document.querySelectorAll('.map__card');
+    for (var i = 0; i < mapCard.length; i++) {
+      if (mapCard[i]) {
+        mapCard[i].remove();
+      }
+    }
+  };
+
 
   var resetPage = function () {
     window.map.turnOffMap();
@@ -134,16 +152,8 @@
     window.map.mainPin.style.left = window.pin.mapPins.offsetWidth / 2 - window.map.mainPin.offsetWidth / 2 + 'px';
     window.map.mainPin.style.top = window.pin.mapPins.offsetHeight / 2 + window.map.mainPin.offsetHeight / 2 + 'px';
     window.map.adressInput.value = window.util.getPinPosition(window.map.mainPin);
-    var mapCard = document.querySelectorAll('.map__card');
-    var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    for (var i = 0; i < mapPin.length; i++) {
-      if (mapPin[i]) {
-        mapPin[i].remove();
-      }
-      if (mapCard[i]) {
-        mapCard[i].remove();
-      }
-    }
+    removeMapPins();
+    removeCard();
   };
 
   var saveForm = function () {
@@ -162,4 +172,9 @@
   resetButton.addEventListener('click', resetPage);
 
   window.util.adForm.addEventListener('submit', onFormSubmit);
+
+  window.form = {
+    removeMapPins: removeMapPins,
+    removeCard: removeCard
+  };
 })();

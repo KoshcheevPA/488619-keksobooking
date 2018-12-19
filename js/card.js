@@ -90,8 +90,8 @@
       for (var i = 0; i < array.length; i++) {
         cardFragment.appendChild(renderCard(array[i]));
       }
-      var mapFilters = document.querySelector('map__filters-container');
-      window.util.map.insertBefore(cardFragment, mapFilters);
+      var mapFiltersContainer = document.querySelector('map__filters-container');
+      window.util.map.insertBefore(cardFragment, mapFiltersContainer);
     }
   };
 })();

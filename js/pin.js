@@ -1,18 +1,20 @@
 'use strict';
 
 (function () {
+  var MAX_PIN_AMOUNT = 5;
   var similarPinElement = document.querySelector('.map__pin');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinFragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
   window.pin = {
+    MAX_PIN_AMOUNT: MAX_PIN_AMOUNT,
     mapPins: mapPins,
     similarPinElement: similarPinElement,
     getNewPin: function (array) {
-      for (var i = 0; i < array.length; i++) {
+      for (var i = 0; i < Math.min(array.length, MAX_PIN_AMOUNT); i++) {
         var pinElement = pinTemplate.cloneNode(true);
         var pinImg = pinElement.querySelector('img');
-        pinTemplate.style = 'left: ' + array[i].location.x + 'px; top: ' + array[i].location.y + 'px;';
+        pinElement.style = 'left: ' + array[i].location.x + 'px; top: ' + array[i].location.y + 'px;';
         pinImg.src = array[i].author.avatar;
         pinImg.alt = array[i].offer.title;
         pinFragment.appendChild(pinElement);
@@ -43,7 +45,7 @@
       };
 
       var onPopupClose = function () {
-        for (var j = 0; i < mapCard.length; j++) {
+        for (var j = 0; j < mapCard.length; j++) {
           mapCard[j].classList.add('hidden');
         }
         document.removeEventListener('keydown', onPopupCloseEsc);

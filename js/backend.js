@@ -22,7 +22,6 @@
     xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
     });
-
     xhr.open(method, url);
     xhr.send(data);
   };

@@ -4,7 +4,7 @@
   var MIN_LOCATION_X = 0;
   var ESC_BUTTON = 27;
   var ENTER_BUTTON = 13;
-
+  var filterArray;
   var formHeader = window.util.adForm.querySelector('.ad-form-header');
   var formElement = window.util.adForm.querySelectorAll('.ad-form__element');
   var adressInput = document.querySelector('#address');
@@ -28,7 +28,7 @@
   adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
 
   var onFormActivate = function () {
-    window.backend.load(window.pin.getNewPin, 'Ошибка');
+    window.backend.load(onLoad, 'Ошибка');
     window.util.map.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
 
@@ -38,6 +38,19 @@
     }
     adressInput.value = window.util.getPinPosition(mainPin);
     mainPin.removeEventListener('mouseup', onFormActivate);
+  };
+
+  var getFilterPins = function () {
+    var filteredPins = window.filter.getFilterArray(filterArray);
+    window.form.removeMapPins();
+    window.form.removeCard();
+    window.pin.getNewPin(filteredPins);
+  };
+
+  var onLoad = function (array) {
+    window.filter.removeDisabledFilter();
+    window.pin.getNewPin(array);
+    filterArray = array;
   };
 
   var onMainPinActivateEnter = function (evt) {
@@ -108,5 +121,6 @@
     adressInput: adressInput,
     mainPin: mainPin,
     escButton: ESC_BUTTON,
+    getFilterPins: getFilterPins
   };
 })();
