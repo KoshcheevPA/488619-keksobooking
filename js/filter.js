@@ -64,12 +64,15 @@
   };
 
   var comparePrice = function (item) {
+    var prices = PRICE[housingPrice.value];
+    var min = prices.minPrice;
+    var max = prices.maxPrice;
     if (housingPrice.value === 'low') {
-      return item.offer.price < PRICE.low.maxPrice && item.offer.price > PRICE.low.minPrice;
+      return item.offer.price < max && item.offer.price > min;
     } else if (housingPrice.value === 'middle') {
-      return item.offer.price >= PRICE.middle.minPrice && item.offer.price <= PRICE.middle.maxPrice;
+      return item.offer.price >= min && item.offer.price <= max;
     } else if (housingPrice.value === 'high') {
-      return item.offer.price > PRICE.high.minPrice;
+      return item.offer.price > min;
     }
     return housingPrice.value === defaultValue;
   };
