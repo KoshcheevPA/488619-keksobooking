@@ -10,6 +10,22 @@
   var mapBlockHeight = mapBlock.offsetHeight;
   var map = document.querySelector('.map');
 
+  var DEBOUNCE_INTERVAL = 500;
+
+  var debounce = function (cb) {
+    var lastTimeout = null;
+
+    return function () {
+      var parameters = arguments;
+      if (lastTimeout) {
+        window.clearTimeout(lastTimeout);
+      }
+      lastTimeout = window.setTimeout(function () {
+        cb.apply(null, parameters);
+      }, DEBOUNCE_INTERVAL);
+    };
+  };
+
   window.util = {
     MIN_LOCATION_Y: MIN_LOCATION_Y,
     MAX_LOCATION_Y: MAX_LOCATION_Y,
@@ -17,6 +33,7 @@
     mapBlockWidth: mapBlockWidth,
     mapBlockHeight: mapBlockHeight,
     map: map,
+    debounce: debounce,
     getPinPosition: function (pin) {
       var positionPinY = Math.round(pin.offsetTop + MAIN_PIN_HEIGHT / 2);
       var positionPinX = Math.round(pin.offsetLeft + pin.offsetWidth / 2);
