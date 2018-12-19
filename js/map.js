@@ -16,16 +16,21 @@
     }
   };
 
+  var mainPin = document.querySelector('.map__pin--main');
+  adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
+
   var turnOffMap = function () {
     adressInput.value = window.util.getPinPosition(mainPin);
     window.util.map.classList.add('map--faded');
     window.util.adForm.classList.add('ad-form--disabled');
+    mainPin.style.left = window.pin.mapPins.offsetWidth / 2 - window.map.mainPin.offsetWidth / 2 + 'px';
+    mainPin.style.top = window.pin.mapPins.offsetHeight / 2 + window.map.mainPin.offsetHeight / 2 + 'px';
+    mainPin.addEventListener('mouseup', onFormActivate);
+    mainPin.addEventListener('keydown', onMainPinActivateEnter);
   };
 
   setDisabled();
 
-  var mainPin = document.querySelector('.map__pin--main');
-  adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
 
   var onFormActivate = function () {
     window.backend.load(onLoad, 'Ошибка');

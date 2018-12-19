@@ -113,7 +113,8 @@
 
   window.filter = {
     getFilterArray: getFilterArray,
-    removeDisabledFilter: removeDisabledFilter
+    removeDisabledFilter: removeDisabledFilter,
+    setDisabledFilter: setDisabledFilter
   };
 
 
