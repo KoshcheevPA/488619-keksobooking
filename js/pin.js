@@ -14,7 +14,7 @@
       for (var i = 0; i < Math.min(array.length, MAX_PIN_AMOUNT); i++) {
         var pinElement = pinTemplate.cloneNode(true);
         var pinImg = pinElement.querySelector('img');
-        pinTemplate.style = 'left: ' + array[i].location.x + 'px; top: ' + array[i].location.y + 'px;';
+        pinElement.style = 'left: ' + array[i].location.x + 'px; top: ' + array[i].location.y + 'px;';
         pinImg.src = array[i].author.avatar;
         pinImg.alt = array[i].offer.title;
         pinFragment.appendChild(pinElement);
