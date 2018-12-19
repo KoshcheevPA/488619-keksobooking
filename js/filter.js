@@ -3,8 +3,22 @@
 (function () {
 
   var PRICE = {
-    LOW: 10000,
-    HIGH: 50000
+    'any': {
+      minPrice: 0,
+      maxPrice: Infinity
+    },
+    'low': {
+      minPrice: 0,
+      maxPrice: 10000
+    },
+    'middle': {
+      minPrice: 10000,
+      maxPrice: 50000
+    },
+    'high': {
+      minPrice: 50000,
+      maxPrice: Infinity
+    }
   };
 
   var defaultValue = 'any';
@@ -38,39 +52,26 @@
   setDisabledFilter();
 
   var compareHousingType = function (item) {
-    if (item.offer.type === housingType.value) {
-      return item.offer.type === housingType.value;
-    } else {
-      return housingType.value === defaultValue;
-    }
+    return item.offer.type === housingType.value || housingType.value === defaultValue;
   };
 
   var compareHousingRooms = function (item) {
-    if (item.offer.rooms.toString() === housingRooms.value) {
-      return item.offer.rooms.toString() === housingRooms.value;
-    } else {
-      return housingRooms.value === defaultValue;
-    }
+    return item.offer.rooms.toString() === housingRooms.value || housingRooms.value === defaultValue;
   };
 
   var compareHousingGuests = function (item) {
-    if (item.offer.guests.toString() === housingGuests.value) {
-      return item.offer.guests.toString() === housingGuests.value;
-    } else {
-      return housingGuests.value === defaultValue;
-    }
+    return item.offer.guests.toString() === housingGuests.value || housingGuests.value === defaultValue;
   };
 
   var comparePrice = function (item) {
     if (housingPrice.value === 'low') {
-      return item.offer.price < PRICE.LOW;
+      return item.offer.price < PRICE.low.maxPrice && item.offer.price > PRICE.low.minPrice;
     } else if (housingPrice.value === 'middle') {
-      return item.offer.price >= PRICE.LOW && item.offer.price <= PRICE.HIGH;
+      return item.offer.price >= PRICE.middle.minPrice && item.offer.price <= PRICE.middle.maxPrice;
     } else if (housingPrice.value === 'high') {
-      return item.offer.price > PRICE.HIGH;
-    } else {
-      return housingPrice.value === defaultValue;
+      return item.offer.price > PRICE.high.minPrice;
     }
+    return housingPrice.value === defaultValue;
   };
 
   var compareFeatures = function (item) {
