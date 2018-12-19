@@ -1,6 +1,13 @@
 'use strict';
 
 (function () {
+  var OFFER_TYPE = {
+    flat: 'Квартира',
+    bungalo: 'Бунгало',
+    house: 'Дом',
+    palace: 'Дворец'
+  };
+
   var similarCardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var renderCard = function (object) {
     var cardElement = similarCardTemplate.cloneNode(true);
@@ -61,37 +68,41 @@
     var housePhotos = cardElement.querySelector('.popup__photos');
     var housePhoto = cardElement.querySelector('.popup__photo');
 
-    if (object.offer.photos.length !== 0) {
-      housePhoto.src = object.offer.photos[0];
-      for (var j = 1; j < object.offer.photos.length; j++) {
+    var photosArray = object.offer.photos;
+    housePhotos.style = 'display: none';
+
+    if (photosArray.length !== 0) {
+      housePhoto.src = photosArray[0];
+      for (var j = 1; j < photosArray.length; j++) {
         var photoElement = housePhoto.cloneNode(true);
-        photoElement.src = object.offer.photos[j];
+        photoElement.src = photosArray[j];
         housePhotos.appendChild(photoElement);
+        housePhotos.style = 'display: flex';
       }
-    } else {
-      housePhotos.style = 'display: none';
     }
 
     if (object.offer.type === 'flat') {
-      cardElement.querySelector('.popup__type').textContent = 'Квартира';
+      cardElement.querySelector('.popup__type').textContent = OFFER_TYPE.flat;
     } else if (object.offer.type === 'bungalo') {
-      cardElement.querySelector('.popup__type').textContent = 'Бунгало';
+      cardElement.querySelector('.popup__type').textContent = OFFER_TYPE.bungalo;
     } else if (object.offer.type === 'house') {
-      cardElement.querySelector('.popup__type').textContent = 'Дом';
+      cardElement.querySelector('.popup__type').textContent = OFFER_TYPE.house;
     } else if (object.offer.type === 'palace') {
-      cardElement.querySelector('.popup__type').textContent = 'Дворец';
+      cardElement.querySelector('.popup__type').textContent = OFFER_TYPE.palace;
     }
     return cardElement;
   };
 
-  window.card = {
-    addCard: function (array) {
-      var cardFragment = document.createDocumentFragment();
-      for (var i = 0; i < array.length; i++) {
-        cardFragment.appendChild(renderCard(array[i]));
-      }
-      var mapFiltersContainer = document.querySelector('map__filters-container');
-      window.util.map.insertBefore(cardFragment, mapFiltersContainer);
+  var addCard = function (array) {
+    var cardFragment = document.createDocumentFragment();
+    for (var i = 0; i < array.length; i++) {
+      cardFragment.appendChild(renderCard(array[i]));
     }
+    var mapFiltersContainer = document.querySelector('map__filters-container');
+    window.util.map.insertBefore(cardFragment, mapFiltersContainer);
+  };
+
+  window.card = {
+    addCard: addCard
   };
 })();
