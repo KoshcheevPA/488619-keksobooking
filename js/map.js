@@ -2,7 +2,6 @@
 
 (function () {
   var MIN_LOCATION_X = 0;
-  var ESC_BUTTON = 27;
   var ENTER_BUTTON = 13;
   var filterArray;
   var formHeader = window.util.adForm.querySelector('.ad-form-header');
