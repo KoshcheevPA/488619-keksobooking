@@ -18,36 +18,37 @@
     var mapPin = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     var popupCross = document.querySelectorAll('.popup__close');
 
-    for (var k = 0; k < mapPin.length; k++) {
-      mapPin[k].classList.remove('hidden');
-    }
+
+    mapPin.forEach(function (element) {
+      element.classList.remove('hidden');
+    });
 
     var onPinClick = function (pin, card) {
       pin.addEventListener('click', function () {
         document.addEventListener('keydown', onPopupCloseEsc);
-        for (var j = 0; j < mapCard.length; j++) {
-          if (!mapCard[j].classList.contains('hidden')) {
-            mapCard[j].classList.add('hidden');
+        mapCard.forEach(function (element) {
+          if (!element.classList.contains('hidden')) {
+            element.classList.add('hidden');
           }
-        }
+        });
         card.classList.remove('hidden');
       });
     };
 
     var onPopupClose = function () {
-      for (var j = 0; j < mapCard.length; j++) {
-        mapCard[j].classList.add('hidden');
-      }
+      mapCard.forEach(function (element) {
+        element.classList.add('hidden');
+      });
       document.removeEventListener('keydown', onPopupCloseEsc);
     };
 
     var onPopupCloseEsc = function (evt) {
-      for (var t = 0; t < mapCard.length; t++) {
+      mapCard.forEach(function (element) {
         if (evt.keyCode === window.util.escButton) {
-          mapCard[t].classList.add('hidden');
+          element.classList.add('hidden');
           document.removeEventListener('keydown', onPopupCloseEsc);
         }
-      }
+      });
     };
 
     for (var j = 0; j < mapPin.length; j++) {
@@ -58,9 +59,9 @@
       }
     }
 
-    for (var l = 0; l < mapPin.length; l++) {
-      popupCross[l].addEventListener('click', onPopupClose);
-    }
+    popupCross.forEach(function (element) {
+      element.addEventListener('click', onPopupClose);
+    });
   };
 
   var getNewPin = function (array) {
