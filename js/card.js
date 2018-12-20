@@ -99,7 +99,7 @@
       cardFragment.appendChild(renderCard(array[i]));
     }
     var mapFiltersContainer = document.querySelector('map__filters-container');
-    window.util.map.insertBefore(cardFragment, mapFiltersContainer);
+    window.map.map.insertBefore(cardFragment, mapFiltersContainer);
   };
 
   window.card = {

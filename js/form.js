@@ -9,13 +9,14 @@
     palace: 10000
   };
 
-  var priceInput = window.util.adForm.querySelector('#price');
-  var typeSelect = window.util.adForm.querySelector('#type');
-  var timeInSelect = window.util.adForm.querySelector('#timein');
-  var timeOutSelect = window.util.adForm.querySelector('#timeout');
-  var roomNumberSelect = window.util.adForm.querySelector('#room_number');
-  var guestRoomSelect = window.util.adForm.querySelector('#capacity');
-  var resetButton = window.util.adForm.querySelector('.ad-form__reset');
+  var adForm = document.querySelector('.ad-form');
+  var priceInput = adForm.querySelector('#price');
+  var typeSelect = adForm.querySelector('#type');
+  var timeInSelect = adForm.querySelector('#timein');
+  var timeOutSelect = adForm.querySelector('#timeout');
+  var roomNumberSelect = adForm.querySelector('#room_number');
+  var guestRoomSelect = adForm.querySelector('#capacity');
+  var resetButton = adForm.querySelector('.ad-form__reset');
   var guestsAllOptions = guestRoomSelect.querySelectorAll('option');
 
 
@@ -146,7 +147,7 @@
     window.map.setDisabled();
     window.filter.setDisabledFilter();
     window.util.adForm.reset();
-    window.map.adressInput.value = window.util.getPinPosition(window.map.mainPin);
+    window.map.adressInput.value = window.pin.getPinPosition(window.map.mainPin);
     removeMapPins();
     removeCard();
   };
@@ -161,15 +162,16 @@
 
   var onFormSubmit = function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(window.util.adForm), saveForm, getError);
+    window.backend.save(new FormData(adForm), saveForm, getError);
   };
 
   resetButton.addEventListener('click', resetPage);
 
-  window.util.adForm.addEventListener('submit', onFormSubmit);
+  adForm.addEventListener('submit', onFormSubmit);
 
   window.form = {
     removeMapPins: removeMapPins,
-    removeCard: removeCard
+    removeCard: removeCard,
+    adForm: adForm
   };
 })();
