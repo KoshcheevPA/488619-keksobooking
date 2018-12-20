@@ -39,7 +39,7 @@
     if (matches) {
       var reader = new FileReader();
 
-      reader.addEventListener('load', function() {
+      reader.addEventListener('load', function () {
         avatarPreviewImg.src = reader.result;
         avatarPreviewImg.width = avatarPreview.offsetWidth;
         avatarPreviewImg.height = avatarPreview.offsetHeight;
@@ -61,7 +61,7 @@
     if (matches) {
       var reader = new FileReader();
 
-      reader.addEventListener('load', function() {
+      reader.addEventListener('load', function () {
         var photoBlock = document.createElement('div');
         var photo = document.createElement('img');
         photoBlock.classList.add('ad-form__photo');
@@ -111,7 +111,7 @@
     guestsAllOptions.forEach(function (option) {
       setDisabled(option);
     });
-    array.forEach(function (guestOptions) {
+    array.forEach(function (guestOption) {
       var guestOptions = guestRoomSelect.querySelector('[value="' + guestOptions + '"]');
       removeDisabled(guestOptions);
     });

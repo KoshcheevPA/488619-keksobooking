@@ -3,7 +3,6 @@
 (function () {
   var MAIN_PIN_HEIGHT = 66;
   var MAX_PIN_AMOUNT = 5;
-  var similarPinElement = document.querySelector('.map__pin');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinFragment = document.createDocumentFragment();
   var mapPins = document.querySelector('.map__pins');
