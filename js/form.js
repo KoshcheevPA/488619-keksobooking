@@ -112,7 +112,7 @@
       setDisabled(option);
     });
     array.forEach(function (guestOption) {
-      var guestOptions = guestRoomSelect.querySelector('[value="' + guestOptions + '"]');
+      var guestOptions = guestRoomSelect.querySelector('[value="' + guestOption + '"]');
       removeDisabled(guestOptions);
     });
   };
