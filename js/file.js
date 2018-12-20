@@ -28,7 +28,7 @@
         avatarPreviewImg.src = reader.result;
         avatarPreviewImg.width = avatarPreview.offsetWidth;
         avatarPreviewImg.height = avatarPreview.offsetHeight;
-        avatarPreviewImg.style = 'border-radius: 5px'
+        avatarPreviewImg.style = 'border-radius: 5px';
         avatarPreview.style = 'padding: 0';
       });
 
@@ -71,7 +71,7 @@
   };
 
   var resetPhotos = function () {
-    var housePhotos = adForm.querySelectorAll('#photo');
+    var housePhotos = window.form.adForm.querySelectorAll('#photo');
     housePhotos.forEach(function (photo) {
       photo.remove();
     });
