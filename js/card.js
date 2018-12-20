@@ -81,22 +81,14 @@
       }
     }
 
-    if (object.offer.type === 'flat') {
-      cardElement.querySelector('.popup__type').textContent = OFFER_TYPE.flat;
-    } else if (object.offer.type === 'bungalo') {
-      cardElement.querySelector('.popup__type').textContent = OFFER_TYPE.bungalo;
-    } else if (object.offer.type === 'house') {
-      cardElement.querySelector('.popup__type').textContent = OFFER_TYPE.house;
-    } else if (object.offer.type === 'palace') {
-      cardElement.querySelector('.popup__type').textContent = OFFER_TYPE.palace;
-    }
+    cardElement.querySelector('.popup__type').textContent = OFFER_TYPE[object.offer.type];
     return cardElement;
   };
 
-  var addCard = function (array) {
+  var addCard = function (cards) {
     var cardFragment = document.createDocumentFragment();
-    for (var i = 0; i < array.length; i++) {
-      cardFragment.appendChild(renderCard(array[i]));
+    for (var i = 0; i < cards.length; i++) {
+      cardFragment.appendChild(renderCard(cards[i]));
     }
     var mapFiltersContainer = document.querySelector('map__filters-container');
     window.map.map.insertBefore(cardFragment, mapFiltersContainer);
