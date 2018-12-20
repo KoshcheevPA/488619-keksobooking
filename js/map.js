@@ -16,6 +16,13 @@
     }
   };
 
+  var removeDisabled = function () {
+    formHeader.removeAttribute('disabled', 'true');
+    for (var t = 0; t < formElement.length; t++) {
+      formElement[t].removeAttribute('disabled', 'true');
+    }
+  };
+
   var mainPin = document.querySelector('.map__pin--main');
   adressInput.value = window.util.mapBlockWidth / 2 + ', ' + window.util.mapBlockHeight / 2;
 
@@ -37,10 +44,7 @@
     window.util.map.classList.remove('map--faded');
     window.util.adForm.classList.remove('ad-form--disabled');
 
-    formHeader.removeAttribute('disabled');
-    for (var t = 0; t < formElement.length; t++) {
-      formElement[t].removeAttribute('disabled');
-    }
+    removeDisabled();
     adressInput.value = window.util.getPinPosition(mainPin);
     mainPin.removeEventListener('mouseup', onFormActivate);
   };
@@ -89,16 +93,21 @@
       var topCoord = mainPin.offsetTop - shift.y;
       var leftCoord = mainPin.offsetLeft - shift.x;
 
-      if (topCoord <= (window.util.MIN_LOCATION_Y - mainPin.offsetHeight / 2)) {
-        topCoord = window.util.MIN_LOCATION_Y - mainPin.offsetHeight / 2;
-      } else if (topCoord >= (window.util.MAX_LOCATION_Y - mainPin.offsetHeight / 2)) {
-        topCoord = window.util.MAX_LOCATION_Y - mainPin.offsetHeight / 2;
+      var minY = window.util.MIN_LOCATION_Y - mainPin.offsetHeight / 2;
+      var maxY = window.util.MAX_LOCATION_Y - mainPin.offsetHeight / 2;
+      var minX = MIN_LOCATION_X - mainPin.offsetWidth / 2;
+      var maxX = window.util.map.offsetWidth - mainPin.offsetWidth / 2;
+
+      if (topCoord <= minY) {
+        topCoord = minY;
+      } else if (topCoord >= maxY) {
+        topCoord = maxY;
       }
 
-      if (leftCoord <= (MIN_LOCATION_X - mainPin.offsetWidth / 2)) {
-        leftCoord = MIN_LOCATION_X - mainPin.offsetWidth / 2;
-      } else if (leftCoord >= (window.util.map.offsetWidth - mainPin.offsetWidth / 2)) {
-        leftCoord = window.util.map.offsetWidth - mainPin.offsetWidth / 2;
+      if (leftCoord <= minX) {
+        leftCoord = minX;
+      } else if (leftCoord >= maxX) {
+        leftCoord = maxX;
       }
 
       mainPin.style.top = topCoord + 'px';
@@ -125,7 +134,6 @@
     turnOffMap: turnOffMap,
     adressInput: adressInput,
     mainPin: mainPin,
-    escButton: ESC_BUTTON,
     getFilterPins: getFilterPins
   };
 })();

@@ -85,7 +85,7 @@
 
   var closeSuccessEsc = function (evt) {
     evt.preventDefault();
-    if (evt.keyCode === window.map.escButton) {
+    if (evt.keyCode === window.util.escButton) {
       main.removeChild(successMessage);
       document.removeEventListener('keydown', closeSuccessEsc);
       document.removeEventListener('click', closeSuccess);
@@ -107,7 +107,7 @@
 
   var closeErrorEsc = function (evt) {
     evt.preventDefault();
-    if (evt.keyCode === window.map.escButton) {
+    if (evt.keyCode === window.util.escButton) {
       main.removeChild(errorMessage);
       errorMessage.removeEventListener('click', closeError);
       document.removeEventListener('keydown', closeErrorEsc);

@@ -53,7 +53,7 @@
 
       var onPopupCloseEsc = function (evt) {
         for (var t = 0; t < mapCard.length; t++) {
-          if (evt.keyCode === window.map.escButton) {
+          if (evt.keyCode === window.util.escButton) {
             mapCard[t].classList.add('hidden');
             document.removeEventListener('keydown', onPopupCloseEsc);
           }

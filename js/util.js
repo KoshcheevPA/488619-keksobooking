@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var ESC_BUTTON = 27;
   var MIN_LOCATION_Y = 130;
   var MAX_LOCATION_Y = 630;
   var MAIN_PIN_HEIGHT = 66;
@@ -27,6 +28,7 @@
   };
 
   window.util = {
+    escButton: ESC_BUTTON,
     MIN_LOCATION_Y: MIN_LOCATION_Y,
     MAX_LOCATION_Y: MAX_LOCATION_Y,
     adForm: adForm,
