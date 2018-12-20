@@ -8,21 +8,21 @@
   var map = document.querySelector('.map');
   var filterArray;
   var formHeader = window.form.adForm.querySelector('.ad-form-header');
-  var formElement = window.form.adForm.querySelectorAll('.ad-form__element');
+  var formElements = window.form.adForm.querySelectorAll('.ad-form__element');
   var adressInput = document.querySelector('#address');
 
   var setDisabled = function () {
     formHeader.setAttribute('disabled', 'true');
-    for (var k = 0; k < formElement.length; k++) {
-      formElement[k].setAttribute('disabled', 'true');
-    }
+    formElements.forEach(function (element) {
+      element.setAttribute('disabled', 'true');
+    });
   };
 
   var removeDisabled = function () {
     formHeader.removeAttribute('disabled', 'true');
-    for (var t = 0; t < formElement.length; t++) {
-      formElement[t].removeAttribute('disabled', 'true');
-    }
+    formElements.forEach(function (element) {
+      element.removeAttribute('disabled', 'true');
+    });
   };
 
   var mainPin = document.querySelector('.map__pin--main');
