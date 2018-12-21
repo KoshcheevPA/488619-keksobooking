@@ -87,7 +87,7 @@
     return featuresArray.length === checkedFeatures.length;
   };
 
-  var onFilterChange = window.debounce(function () {
+  var onFilterChange = window.util.debounce(function () {
     window.map.getFilterPins();
   });
 
@@ -113,7 +113,8 @@
 
   window.filter = {
     getFilterArray: getFilterArray,
-    removeDisabledFilter: removeDisabledFilter
+    removeDisabledFilter: removeDisabledFilter,
+    setDisabledFilter: setDisabledFilter
   };
 
 
