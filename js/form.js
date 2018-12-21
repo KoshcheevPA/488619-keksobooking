@@ -47,6 +47,7 @@
     100: [0]
   };
 
+
   var getGuestOptions = function (array) {
     guestsAllOptions.forEach(function (option) {
       setDisabled(option);
@@ -56,6 +57,7 @@
       removeDisabled(guestOptions);
     });
   };
+  getGuestOptions(guestsNumbersObject[roomNumberSelect.value]);
 
   roomNumberSelect.addEventListener('change', function () {
     if (roomNumberSelect.value === '100') {
